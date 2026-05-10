@@ -29,7 +29,7 @@ export default function DraftPage() {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (raw) setDraft({ ...EMPTY, ...JSON.parse(raw) });
     } catch {
-      // ignore
+      /* ignore */
     }
     setHydrated(true);
   }, []);
@@ -39,7 +39,7 @@ export default function DraftPage() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(draft));
     } catch {
-      // ignore
+      /* ignore */
     }
   }, [draft, hydrated]);
 
@@ -87,22 +87,20 @@ export default function DraftPage() {
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     } catch {
-      // ignore
+      /* ignore */
     }
   };
 
   return (
-    <main className="space-y-8">
-      <header className="space-y-3">
-        <p className="font-mono text-xs uppercase tracking-wider text-ink-light">
-          /draft
-        </p>
-        <h1 className="text-3xl font-semibold tracking-tight">
-          Light paper drafter
+    <main className="space-y-10">
+      <header className="space-y-4">
+        <p className="label-mono">/draft · light paper</p>
+        <h1 className="font-display text-6xl text-white md:text-7xl">
+          500 words. <span className="text-[#0052FF]">no more.</span>
         </h1>
-        <p className="max-w-2xl text-ink-muted">
-          500-word ceiling. Section budgets are guidelines — total ≤ 500 is what
-          matters. Saved automatically to your browser.
+        <p className="max-w-2xl text-lg text-ink-muted">
+          Section budgets are guidelines. Total ≤ 500 is what matters.
+          Saved automatically to your browser.
         </p>
       </header>
 
@@ -113,33 +111,38 @@ export default function DraftPage() {
         ceiling={TOTAL_CEILING}
       />
 
-      {whyBase.hasGenericPhrase && (
-        <Callout tone="warn">
-          Your <strong>Why Base</strong> contains a generic phrase ({"\""}fast,
-          cheap, growing ecosystem{"\""}-style). Selectors flag this as the #1
-          rejection signal. Name a specific primitive — Smart Wallet, MiniKit,
-          OnchainKit, Basenames, Coinbase Verifications, x402, AgentKit, CDP.
-        </Callout>
-      )}
-      {!whyBase.hasPrimitive && draft.why_base.trim().length > 50 && (
-        <Callout tone="warn">
-          <strong>Why Base</strong> doesn{"'"}t name a Base-specific primitive.
-          If your product would behave identically on any L2, this section will
-          fail. Add: Smart Wallet, MiniKit, OnchainKit, Basenames, Coinbase
-          Verifications, x402, AgentKit, or CDP — and explain how the product
-          depends on it.
-        </Callout>
-      )}
-      {whyBase.hasPrimitive && !whyBase.hasGenericPhrase && (
-        <Callout tone="ok">
-          ✓ Why Base names a primitive ({whyBase.primitivesFound.join(", ")}).
-        </Callout>
-      )}
+      <div className="space-y-3">
+        {whyBase.hasGenericPhrase && (
+          <Callout tone="warn">
+            Your <strong>Why Base</strong> contains a generic phrase
+            ({"\""}fast, cheap, growing ecosystem{"\""}-style). Selectors flag
+            this as the #1 rejection signal. Name a specific primitive — Smart
+            Wallet, MiniKit, OnchainKit, Basenames, Coinbase Verifications,
+            x402, AgentKit, CDP.
+          </Callout>
+        )}
+        {!whyBase.hasPrimitive && draft.why_base.trim().length > 50 && (
+          <Callout tone="warn">
+            <strong>Why Base</strong> doesn{"'"}t name a Base-specific
+            primitive. If your product would behave identically on any L2, this
+            section will fail. Add: Smart Wallet, MiniKit, OnchainKit,
+            Basenames, Coinbase Verifications, x402, AgentKit, or CDP — and
+            explain how the product depends on it.
+          </Callout>
+        )}
+        {whyBase.hasPrimitive && !whyBase.hasGenericPhrase && (
+          <Callout tone="ok">
+            <span className="text-mint">✓</span>{" "}
+            <strong>Why Base</strong> names a primitive ({whyBase.primitivesFound.join(", ")}).
+          </Callout>
+        )}
+      </div>
 
-      <div className="space-y-6">
-        {SECTIONS.map((s) => (
+      <div className="space-y-5">
+        {SECTIONS.map((s, i) => (
           <SectionEditor
             key={s.id}
+            idx={i + 1}
             id={s.id}
             label={s.label}
             hint={s.hint}
@@ -152,26 +155,26 @@ export default function DraftPage() {
         ))}
       </div>
 
-      <div className="sticky bottom-4 mt-8 flex flex-col gap-3 rounded-xl border border-ink/10 bg-white/95 p-4 shadow-lg backdrop-blur sm:flex-row sm:items-center sm:justify-between">
+      <div className="sticky bottom-4 mt-8 flex flex-col gap-3 rounded-xl border border-ink-line/80 bg-black/80 p-4 backdrop-blur-md sm:flex-row sm:items-center sm:justify-between">
         <div className="font-mono text-sm">
           <span
             className={
               overCeiling
-                ? "text-red-600"
+                ? "text-rose"
                 : inSweet
-                  ? "text-emerald-600"
+                  ? "text-mint"
                   : "text-ink-muted"
             }
           >
             {total} / {TOTAL_CEILING} words
           </span>
           {overCeiling && (
-            <span className="ml-2 text-red-600">
+            <span className="ml-2 text-rose">
               over ceiling — cut {total - TOTAL_CEILING}
             </span>
           )}
           {!overCeiling && total > 0 && total < TOTAL_TARGET_LOW && (
-            <span className="ml-2 text-ink-light">
+            <span className="ml-2 text-ink-dim">
               room for {TOTAL_TARGET_LOW - total} more
             </span>
           )}
@@ -180,7 +183,7 @@ export default function DraftPage() {
           <button
             type="button"
             onClick={reset}
-            className="rounded-md border border-ink/10 bg-white px-3 py-2 text-sm hover:bg-ink/[0.02]"
+            className="pill border-rose/30 hover:border-rose/60 hover:text-rose"
           >
             reset
           </button>
@@ -188,7 +191,7 @@ export default function DraftPage() {
             type="button"
             onClick={onCopy}
             disabled={total === 0}
-            className="rounded-md bg-base px-3 py-2 text-sm font-medium text-white hover:bg-base-600 disabled:cursor-not-allowed disabled:opacity-50"
+            className="pill border-white/30 bg-white text-black hover:bg-white/90 disabled:cursor-not-allowed disabled:opacity-40"
           >
             {copied ? "copied" : "copy as markdown"}
           </button>
@@ -199,6 +202,7 @@ export default function DraftPage() {
 }
 
 function SectionEditor({
+  idx,
   id,
   label,
   hint,
@@ -208,6 +212,7 @@ function SectionEditor({
   count,
   budget,
 }: {
+  idx: number;
   id: string;
   label: string;
   hint: string;
@@ -222,25 +227,28 @@ function SectionEditor({
   const overBudget = count > high;
 
   return (
-    <div className="rounded-lg border border-ink/5 bg-white p-5">
-      <div className="mb-2 flex items-baseline justify-between gap-3">
+    <div className="card p-5">
+      <div className="mb-3 flex items-baseline justify-between gap-3">
         <label
           htmlFor={`field-${id}`}
-          className="text-base font-semibold tracking-tight"
+          className="flex items-baseline gap-3 text-base font-medium tracking-tight text-white"
         >
+          <span className="font-mono text-xs text-ink-dim">
+            {String(idx).padStart(2, "0")}
+          </span>
           {label}
         </label>
         <span
           className={
             "font-mono text-xs " +
             (inBudget
-              ? "text-emerald-600"
+              ? "text-mint"
               : overBudget
-                ? "text-amber-600"
-                : "text-ink-light")
+                ? "text-amber"
+                : "text-ink-dim")
           }
         >
-          {count} words · target {low}–{high}
+          {count} · {low}–{high}
         </span>
       </div>
       <p className="mb-3 text-sm text-ink-muted">{hint}</p>
@@ -250,7 +258,7 @@ function SectionEditor({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         rows={Math.max(3, Math.min(8, Math.floor(value.length / 80) + 3))}
-        className="block w-full resize-y rounded-md border border-ink/10 bg-white p-3 font-mono text-sm leading-relaxed text-ink placeholder:text-ink-light/70 focus:border-base/40 focus:outline-none focus:ring-2 focus:ring-base/15"
+        className="block w-full resize-y rounded-md border border-ink-line bg-black/60 p-3 font-mono text-sm leading-relaxed text-white placeholder:text-ink-dim focus:border-base/60 focus:outline-none focus:ring-2 focus:ring-base/25"
       />
     </div>
   );
@@ -269,30 +277,26 @@ function CounterBar({
 }) {
   const pct = Math.min(100, Math.round((total / ceiling) * 100));
   return (
-    <div className="rounded-lg border border-ink/5 bg-ink/[0.02] p-4">
+    <div className="card p-4">
       <div className="mb-2 flex items-baseline justify-between font-mono text-xs">
-        <span className="text-ink-muted">total · ≤ {ceiling}</span>
+        <span className="label-mono">total · ≤ {ceiling}</span>
         <span
           className={
             overCeiling
-              ? "text-red-600"
+              ? "text-rose"
               : inSweet
-                ? "text-emerald-600"
-                : "text-ink"
+                ? "text-mint"
+                : "text-white"
           }
         >
           {total}
         </span>
       </div>
-      <div className="h-2 overflow-hidden rounded-full bg-ink/[0.06]">
+      <div className="h-1.5 overflow-hidden rounded-full bg-ink-subtle">
         <div
           className={
             "h-full rounded-full transition-all " +
-            (overCeiling
-              ? "bg-red-500"
-              : inSweet
-                ? "bg-emerald-500"
-                : "bg-base")
+            (overCeiling ? "bg-rose" : inSweet ? "bg-mint" : "bg-base")
           }
           style={{ width: `${pct}%` }}
         />
@@ -310,8 +314,8 @@ function Callout({
 }) {
   const cls =
     tone === "warn"
-      ? "border-amber-300/40 bg-amber-50 text-amber-900"
-      : "border-emerald-300/40 bg-emerald-50 text-emerald-900";
+      ? "border-amber/40 bg-amber/[0.06] text-amber"
+      : "border-mint/30 bg-mint/[0.05] text-mint";
   return (
     <div className={"rounded-lg border p-4 text-sm " + cls}>{children}</div>
   );

@@ -1,11 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import {
-  QUESTIONS,
-  recommendTrack,
-  TrackResult,
-} from "@/lib/trackFit";
+import { QUESTIONS, recommendTrack, TrackResult } from "@/lib/trackFit";
 
 type Answer = number | "DQ" | undefined;
 type Answers = Record<string, Answer>;
@@ -21,22 +17,20 @@ export default function TrackPage() {
   const showResults = answeredCount >= 4;
 
   return (
-    <main className="space-y-8">
-      <header className="space-y-3">
-        <p className="font-mono text-xs uppercase tracking-wider text-ink-light">
-          /track
-        </p>
-        <h1 className="text-3xl font-semibold tracking-tight">
-          Track-fit picker
+    <main className="space-y-10">
+      <header className="space-y-4">
+        <p className="label-mono">/track · fit picker</p>
+        <h1 className="font-display text-6xl text-white md:text-7xl">
+          which track? <span className="text-[#0052FF]">we&apos;ll score it.</span>
         </h1>
-        <p className="max-w-2xl text-ink-muted">
+        <p className="max-w-2xl text-lg text-ink-muted">
           Answer the questions that apply. Disqualifiers (DQ) override score —
-          if any DQ row triggers a track, that track is out regardless of how
-          well you score elsewhere.
+          if any DQ row triggers, that track is out regardless of how well you
+          score elsewhere.
         </p>
       </header>
 
-      <div className="space-y-6">
+      <div className="space-y-5">
         {QUESTIONS.map((q, idx) => (
           <Question
             key={q.id}
@@ -45,19 +39,15 @@ export default function TrackPage() {
             options={q.options}
             appliesTo={q.appliesTo}
             value={answers[q.id]}
-            onChange={(v) =>
-              setAnswers((prev) => ({ ...prev, [q.id]: v }))
-            }
+            onChange={(v) => setAnswers((prev) => ({ ...prev, [q.id]: v }))}
           />
         ))}
       </div>
 
-      {showResults && (
+      {showResults ? (
         <Results results={results} answered={answeredCount} />
-      )}
-
-      {!showResults && (
-        <div className="rounded-lg border border-ink/5 bg-ink/[0.02] p-4 text-sm text-ink-muted">
+      ) : (
+        <div className="card p-4 text-sm text-ink-muted">
           Answer at least 4 questions to see a recommendation.
         </div>
       )}
@@ -83,18 +73,18 @@ function Question({
   const trackTag =
     appliesTo === "all"
       ? null
-      : appliesTo[0].toUpperCase() + appliesTo.slice(1);
+      : `<${appliesTo[0].toUpperCase() + appliesTo.slice(1)}>`;
   return (
-    <div className="rounded-lg border border-ink/5 bg-white p-5">
+    <div className="card p-5">
       <div className="mb-3 flex items-baseline justify-between gap-3">
-        <h3 className="text-base font-semibold tracking-tight">
-          <span className="mr-2 font-mono text-xs text-ink-light">
+        <h3 className="flex items-baseline gap-3 text-base font-medium tracking-tight text-white">
+          <span className="font-mono text-xs text-ink-dim">
             {String(idx).padStart(2, "0")}
           </span>
           {question}
         </h3>
         {trackTag && (
-          <span className="rounded-full bg-ink/[0.04] px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-ink-muted">
+          <span className="rounded-full border border-ink-line bg-ink-card px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-ink-muted">
             {trackTag} only
           </span>
         )}
@@ -111,9 +101,9 @@ function Question({
                 "flex items-center justify-between rounded-md border px-4 py-3 text-left text-sm transition " +
                 (selected
                   ? opt.value === "DQ"
-                    ? "border-red-400 bg-red-50 text-red-900"
-                    : "border-base bg-base/5 text-base"
-                  : "border-ink/10 bg-white hover:bg-ink/[0.02]")
+                    ? "border-rose/60 bg-rose/[0.08] text-rose"
+                    : "border-base/60 bg-base/[0.10] text-white"
+                  : "border-ink-line bg-black/30 text-ink-muted hover:border-ink-line/80 hover:bg-ink-card")
               }
             >
               <span>{opt.label}</span>
@@ -122,9 +112,9 @@ function Question({
                   "font-mono text-xs " +
                   (selected
                     ? opt.value === "DQ"
-                      ? "text-red-600"
-                      : "text-base"
-                    : "text-ink-light")
+                      ? "text-rose"
+                      : "text-base-400"
+                    : "text-ink-dim")
                 }
               >
                 {opt.value === "DQ" ? "DQ" : `+${opt.value}`}
@@ -147,25 +137,25 @@ function Results({
   const top = results[0];
   const eligibleTops = results.filter((r) => !r.dq);
   return (
-    <section className="sticky bottom-4 space-y-4 rounded-xl border border-ink/10 bg-white/95 p-6 shadow-lg backdrop-blur">
+    <section className="sticky bottom-4 space-y-5 rounded-xl border border-ink-line bg-black/85 p-6 backdrop-blur-md">
       <div className="flex items-baseline justify-between">
-        <h2 className="text-xl font-semibold tracking-tight">Recommendation</h2>
-        <span className="font-mono text-xs text-ink-light">
+        <p className="label-mono">recommendation</p>
+        <span className="font-mono text-xs text-ink-dim">
           {answered} answered
         </span>
       </div>
       {eligibleTops.length === 0 ? (
-        <p className="text-sm text-red-700">
-          You triggered a DQ on every track. Re-check your answers, or check the
-          Base Batches FAQ to confirm — the rules can change between cohorts.
+        <p className="text-sm text-rose">
+          You triggered a DQ on every track. Re-check your answers, or check
+          the Base Batches FAQ — the rules can change between cohorts.
         </p>
       ) : (
-        <p className="text-sm">
-          Best fit:{" "}
-          <strong className="text-base">{eligibleTops[0].label}</strong>
+        <p className="font-display text-3xl text-white md:text-4xl">
+          best fit:{" "}
+          <span className="text-[#0052FF]">{eligibleTops[0].label}</span>
           {top.track !== eligibleTops[0].track && (
-            <span className="ml-2 text-ink-muted">
-              (top scorer was {top.label} but is DQ&apos;d)
+            <span className="ml-3 align-middle font-mono text-xs text-ink-dim">
+              ({top.label} scored higher but DQ&apos;d)
             </span>
           )}
         </p>
@@ -175,13 +165,13 @@ function Results({
           <TrackCard key={r.track} r={r} />
         ))}
       </div>
-      <p className="font-mono text-xs text-ink-light">
+      <p className="font-mono text-[11px] text-ink-dim">
         Next:{" "}
-        <a href="/draft" className="underline decoration-dotted hover:text-ink">
+        <a href="/draft" className="underline decoration-dotted hover:text-white">
           /draft your light paper
         </a>{" "}
         — or install the CLI to run{" "}
-        <code className="rounded bg-ink/[0.04] px-1 py-0.5 text-[10px]">
+        <code className="rounded bg-ink-card px-1 py-0.5 text-[10px] text-white">
           /submit-to-base-batches
         </code>{" "}
         end-to-end.
@@ -196,27 +186,23 @@ function TrackCard({ r }: { r: TrackResult }) {
     <div
       className={
         "rounded-lg border p-4 " +
-        (r.dq
-          ? "border-red-300/40 bg-red-50/40"
-          : "border-ink/5 bg-white shadow-sm")
+        (r.dq ? "border-rose/30 bg-rose/[0.05]" : "border-ink-line bg-ink-card")
       }
     >
       <div className="flex items-baseline justify-between">
-        <h3 className="font-semibold">{r.label}</h3>
-        <span className="font-mono text-xs text-ink-light">
+        <h3 className="font-medium text-white">{r.label}</h3>
+        <span className="font-mono text-xs text-ink-dim">
           {r.score} / {r.maxScore}
         </span>
       </div>
-      <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-ink/[0.06]">
+      <div className="mt-3 h-1 overflow-hidden rounded-full bg-ink-subtle">
         <div
-          className={
-            "h-full rounded-full " + (r.dq ? "bg-red-400" : "bg-base")
-          }
+          className={"h-full rounded-full " + (r.dq ? "bg-rose" : "bg-base")}
           style={{ width: `${pct}%` }}
         />
       </div>
       {r.dq && (
-        <p className="mt-3 text-xs text-red-700">
+        <p className="mt-3 text-xs text-rose/90">
           DQ: {r.dqReasons.join("; ")}
         </p>
       )}

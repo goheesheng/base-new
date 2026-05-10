@@ -2,21 +2,116 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Retro-pixel display font — VT323 mirrors solana.new's ppMondwest vibe.
+   Loaded via Google Fonts in the layout. */
+
 :root {
-  --background: 255 255 255;
-  --foreground: 10 14 39;
+  --bg: #000000;
+  --fg: #ededed;
+  --base: #0052FF;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: 10 14 39;
-    --foreground: 245 247 250;
-  }
+html {
+  background: var(--bg);
+  color: var(--fg);
 }
-
 body {
-  color: rgb(var(--foreground));
-  background: rgb(var(--background));
+  background: transparent;
+  color: var(--fg);
   -webkit-font-smoothing: antialiased;
-  font-feature-settings: "ss01", "cv11";
+  font-family: Helvetica, Arial, system-ui, sans-serif;
 }
+
+/* The retro display heading style — used for h1/h2 hero text */
+.font-display {
+  font-family: VT323, ui-monospace, Menlo, monospace;
+  letter-spacing: -0.04em;
+  font-weight: 400;
+  line-height: 0.88;
+}
+
+/* Tightly tracked uppercase mono labels (terminal headers, eyebrow text) */
+.label-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+}
+
+/* Pill button mirroring solana.new's GitHub badge */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.85);
+  font-size: 12px;
+  transition: all 150ms ease;
+}
+.pill:hover {
+  border-color: rgba(255,255,255,0.25);
+  color: #ffffff;
+}
+
+/* macOS-style terminal chrome */
+.terminal {
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 100%);
+  overflow: hidden;
+}
+.terminal-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.02);
+}
+.terminal-dots {
+  display: inline-flex;
+  gap: 6px;
+}
+.terminal-dots::before,
+.terminal-dots::after,
+.terminal-dots > span {
+  content: "";
+  width: 11px;
+  height: 11px;
+  border-radius: 9999px;
+}
+.terminal-dots::before { background: #FF5F57; }
+.terminal-dots > span  { background: #FEBC2E; }
+.terminal-dots::after  { background: #28C840; }
+.terminal-body {
+  padding: 18px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+/* Generic card surface */
+.card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+}
+.card:hover { border-color: rgba(255,255,255,0.16); }
+
+/* Scrollbars in dark surfaces */
+::-webkit-scrollbar { height: 8px; width: 8px; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+
+/* Selection */
+::selection {
+  background: rgba(0, 82, 255, 0.45);
+  color: white;
+}
+
+/* Anchor base */
+a { transition: color 150ms ease; }
