@@ -95,18 +95,22 @@ function Line({
 }) {
   if (kind === "ascii") {
     return (
-      <pre className="select-none whitespace-pre text-[8px] leading-[1.05] text-ink-40 sm:text-[9px]">
+      <pre className="select-none whitespace-pre text-[8px] leading-[1.05] text-white/35 sm:text-[9px]">
         {text}
       </pre>
     );
   }
   if (kind === "header") {
-    return <p className="text-center text-[10px] uppercase tracking-[0.16em] text-ink-40">{text}</p>;
+    return (
+      <p className="text-center text-[10px] uppercase tracking-[0.16em] text-white/45">
+        {text}
+      </p>
+    );
   }
   if (kind === "user") {
     return (
-      <p className="text-ink">
-        <span className="select-none crit">{"› "}</span>
+      <p className="text-white">
+        <span className="select-none text-white/40">{"› "}</span>
         {text}
         {typing && <Caret />}
       </p>
@@ -114,7 +118,7 @@ function Line({
   }
   if (kind === "assistant") {
     return (
-      <p className="text-ink-80">
+      <p className="text-white/85">
         {text}
         {typing && <Caret />}
       </p>
@@ -122,15 +126,15 @@ function Line({
   }
   if (kind === "tool") {
     return (
-      <p className="text-ink-60">
-        <span className="crit">✓</span>{" "}
+      <p className="text-white/55">
+        <span className="text-emerald-300">✓</span>{" "}
         {text.replace(/^✓\s*/, "")}
         {typing && <Caret />}
       </p>
     );
   }
   return (
-    <p className="text-ink-60">
+    <p className="text-white/55">
       {text}
       {typing && <Caret />}
     </p>
@@ -141,7 +145,7 @@ function Caret() {
   return (
     <span
       aria-hidden
-      className="ml-0.5 inline-block h-[1em] w-[0.5ch] -translate-y-[2px] animate-pulse bg-marker align-middle"
+      className="ml-0.5 inline-block h-[1em] w-[0.5ch] -translate-y-[2px] animate-pulse bg-white/80 align-middle"
       style={{ animationDuration: "1s" }}
     />
   );

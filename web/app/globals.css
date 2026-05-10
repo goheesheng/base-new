@@ -86,6 +86,50 @@ html, body {
   * { animation-duration: 0ms !important; transition-duration: 0ms !important; }
 }
 
+/* Conic-gradient border sweep on the terminal frame.
+   Mirrors solana.new's terminal-border-shimmer pattern: a 1px gradient
+   stroke implemented as a colored bg behind a slightly-inset child.
+   Re-fires on every tab click via .is-animating. */
+.terminal-border-shimmer {
+  position: relative;
+  background: rgba(10, 10, 10, 0.10);
+  overflow: hidden;
+}
+.terminal-border-shimmer::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0%,
+    transparent 30%,
+    rgba(207, 80, 40, 0.75) 35%,
+    #ffffff 40%,
+    rgba(255, 191, 102, 0.75) 45%,
+    transparent 50%,
+    transparent 100%
+  );
+}
+.terminal-border-shimmer.is-animating::before {
+  animation: terminal-border-sweep 1s linear forwards;
+}
+.terminal-border-shimmer > :first-child {
+  position: relative;
+  z-index: 1;
+}
+@keyframes terminal-border-sweep {
+  0%   { opacity: 0; transform: rotate(0deg); }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { opacity: 0; transform: rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .terminal-border-shimmer::before { display: none; }
+}
+
 /* Selection */
 ::selection { background: var(--marker); color: #fff; }
 
