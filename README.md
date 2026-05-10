@@ -5,7 +5,7 @@
 [![Fork of](https://img.shields.io/badge/fork_of-sendaifun%2Fsolana--new-555)](https://github.com/sendaifun/solana-new)
 [![License](https://img.shields.io/github/license/goheesheng/base-new)](LICENSE)
 
-The open-source platform behind [base.new](https://base.new) — journey skills + an in-browser drafter that take you from "what should I build for Base Batches?" to a submitted application. A Base-focused fork of [`sendaifun/solana-new`](https://github.com/sendaifun/solana-new).
+The open-source platform behind [base.new](https://base.new) — journey skills + an in-browser track-fit picker that take you from "what should I build for Base Batches?" to a submitted application. A Base-focused fork of [`sendaifun/solana-new`](https://github.com/sendaifun/solana-new).
 
 Works with [Claude Code](https://claude.ai/code), [Codex](https://openai.com/index/codex/), and any agent that reads `~/.claude/skills/` or `~/.codex/skills/`.
 
@@ -45,7 +45,7 @@ claude "/scaffold-project Set up Foundry + OnchainKit + Smart Wallet"
 claude "/submit-to-base-batches Prep my submission"
 ```
 
-Every skill interviews you first — never assumes. Or skip the install entirely and use the in-browser tools at [base.new/draft](https://base.new/draft) and [base.new/track](https://base.new/track).
+Every skill interviews you first — never assumes. Or skip the install entirely and use the in-browser track-fit picker at [base.new/track](https://base.new/track).
 
 ## Journey Skills
 
@@ -113,15 +113,14 @@ Base Batches phase + 4 journey phases. You ask naturally, the right skill activa
 
 ## In-browser tools
 
-If you don't want to install the CLI, the same checks run in your browser:
+If you don't want to install the CLI yet, the track-fit rubric runs in your browser:
 
 | Tool | What it does |
 |------|-------------|
 | `base.new` | Landing page with install command, the journey, the side-terminal demo |
-| `base.new/draft` | The 500-word light paper drafter with hard ceiling, per-section budgets, and Why Base specificity check |
 | `base.new/track` | Interactive track-fit rubric with DQ surfacing |
 
-The web tools are a static Next.js export — no backend, your draft saves to `localStorage`.
+The web is a static Next.js export — no backend.
 
 ## How Phases Connect
 
@@ -196,9 +195,9 @@ public/
 scripts/
   package-skills.sh           Builds public/skills.tar.gz from skills/
 web/
-  app/                        Next.js 15 (App Router) — landing + /draft + /track
+  app/                        Next.js 15 (App Router) — landing + /track
   components/                 InstallTerminal + TypingTerminal
-  lib/                        lightPaper.ts (drafter logic) + trackFit.ts (rubric)
+  lib/                        trackFit.ts (rubric)
 convex/                       Opt-in telemetry backend
 ```
 

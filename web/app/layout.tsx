@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "base.new — ship on Base, win Base Batches",
   description:
-    "Skills, light-paper drafter, and track-fit picker for Base Batches submissions. A Base-focused fork of solana.new.",
+    "Skills and a track-fit picker for Base Batches submissions. A Base-focused fork of solana.new.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

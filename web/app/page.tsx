@@ -29,12 +29,12 @@ function CohortStatusBanner() {
             <p className="text-sm leading-relaxed text-white/85 md:text-[15px]">
               <strong className="text-white">Base Batches 004 has not been announced yet.</strong>{" "}
               The dates, tracks, and prize structure shown across the site are
-              from cohort 003 (now closed). Use{" "}
+              from cohort 003 (now closed). Run{" "}
               <code className="rounded bg-white/[0.06] px-1 py-0.5 font-mono text-xs text-white">
-                /draft
+                /submit-to-base-batches
               </code>{" "}
-              to prep your light paper now — when 004 opens, you{`'`}ll be
-              ready. Verify current dates at{" "}
+              in Claude Code to prep your light paper now — when 004 opens,
+              you{`'`}ll be ready. Verify current dates at{" "}
               <a
                 href="https://www.basebatches.xyz/"
                 target="_blank"
@@ -82,11 +82,8 @@ function Hero() {
       {/* In-browser shortcut row */}
       <div className="mt-10 flex flex-wrap items-center justify-center gap-3 text-xs text-white/40">
         <span>or skip the install:</span>
-        <a href="/draft" className="pill">
-          draft your light paper →
-        </a>
         <a href="/track" className="pill">
-          pick the right track
+          pick the right track →
         </a>
       </div>
     </section>
@@ -142,22 +139,22 @@ function FounderMode() {
       tag: "<Draft>",
       title: "the 500-word paper",
       blurb:
-        "Selectors read this first. Section budgets, hard ceiling, Why Base specificity check.",
-      href: "/draft",
+        "Selectors read this first. Section budgets, hard ceiling, Why Base specificity check — enforced by the CLI skill.",
+      href: "https://github.com/goheesheng/base-new/tree/master/skills/launch/submit-to-base-batches",
     },
     {
       tag: "<Build>",
       title: "ship the demo",
       blurb:
         "Smart Wallet, OnchainKit, Mini Apps via MiniKit, Basenames, x402 — primitives that win.",
-      href: "/draft",
+      href: "https://github.com/goheesheng/base-new#install",
     },
     {
       tag: "<Submit>",
       title: "interview prep",
       blurb:
         "Standard founder + SME technical interview banks with sample answers from your build.",
-      href: "/draft",
+      href: "https://github.com/goheesheng/base-new/tree/master/skills/launch/submit-to-base-batches/references",
     },
   ];
   return (
@@ -389,13 +386,16 @@ function CTA() {
       </div>
       <div className="flex gap-3">
         <a
-          href="/draft"
+          href="/track"
           className="pill border-white bg-white px-4 py-2 text-black hover:border-white hover:bg-white/90"
         >
-          open the drafter →
+          /track →
         </a>
-        <a href="/track" className="pill">
-          /track
+        <a
+          href="https://github.com/goheesheng/base-new#install"
+          className="pill"
+        >
+          install the CLI
         </a>
       </div>
     </section>

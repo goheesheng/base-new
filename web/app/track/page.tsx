@@ -181,15 +181,12 @@ function Results({
         ))}
       </div>
       <p className="font-mono text-[11px] text-ink-dim">
-        Next:{" "}
-        <a href="/draft" className="underline decoration-dotted hover:text-white">
-          /draft your light paper
-        </a>{" "}
-        — or install the CLI to run{" "}
+        Next: install the CLI and run{" "}
         <code className="rounded bg-ink-card px-1 py-0.5 text-[10px] text-white">
           /submit-to-base-batches
         </code>{" "}
-        end-to-end.
+        — it drafts the 500-word light paper, prepares both interviews, and
+        emits the submission packet.
       </p>
     </section>
   );
