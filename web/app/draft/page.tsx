@@ -104,6 +104,21 @@ export default function DraftPage() {
         </p>
       </header>
 
+      <div className="rounded-lg border border-amber/30 bg-amber/[0.06] p-4 text-sm text-white/85">
+        <strong className="text-white">Heads up:</strong> Base Batches 004
+        hasn{`'`}t been announced. Drafting now is good prep — verify current
+        dates at{" "}
+        <a
+          href="https://www.basebatches.xyz/"
+          target="_blank"
+          rel="noreferrer"
+          className="text-amber underline decoration-dotted hover:text-amber/80"
+        >
+          basebatches.xyz
+        </a>{" "}
+        before you submit.
+      </div>
+
       <CounterBar
         total={total}
         overCeiling={overCeiling}

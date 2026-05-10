@@ -2,7 +2,17 @@
 
 What Base Batches is, who can apply, what to ship, and how each track is graded.
 
-> **Last verified**: 2026-05-10. Always confirm dates and prize amounts at https://www.basebatches.xyz/ before relying on them. The program runs in cohorts; details shift between cohorts.
+> ## ⚠ Cohort status (snapshot 2026-05-10)
+>
+> **Base Batches 004 — the next cohort — has NOT been announced as of this writing.**
+> The dates, prize amounts, and submission rules below are from the **previous cohort (003)**, which has already closed. Do not submit against these dates.
+>
+> Before drafting a submission:
+> 1. Open https://www.basebatches.xyz/ — the homepage tells you whether a cohort is currently open and what the dates are.
+> 2. If no cohort is open, decide whether to (a) wait, (b) prep now and submit when 004 opens, or (c) target a different program.
+> 3. Skills will draft the submission either way — drafting against last cohort's structure is reasonable preparation, but the user must know dates haven't been re-confirmed.
+>
+> The skill (`submit-to-base-batches`) MUST surface this status check before drafting. Do not silently assume the previous cohort's windows.
 
 ## What Base Batches is
 

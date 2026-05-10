@@ -30,6 +30,21 @@ export default function TrackPage() {
         </p>
       </header>
 
+      <div className="rounded-lg border border-amber/30 bg-amber/[0.06] p-4 text-sm text-white/85">
+        <strong className="text-white">Heads up:</strong> Base Batches 004
+        hasn{`'`}t been announced. Tracks below reflect cohort 003. The next
+        cohort{`'`}s structure may shift — verify at{" "}
+        <a
+          href="https://www.basebatches.xyz/"
+          target="_blank"
+          rel="noreferrer"
+          className="text-amber underline decoration-dotted hover:text-amber/80"
+        >
+          basebatches.xyz
+        </a>
+        .
+      </div>
+
       <div className="space-y-5">
         {QUESTIONS.map((q, idx) => (
           <Question

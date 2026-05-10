@@ -61,6 +61,11 @@ This skill is the **wedge** — it works even if the user did not use any other 
 
 ## Workflow
 
+0. **Cohort status check (FIRST, BEFORE ANYTHING ELSE).** Read [`../../data/base-batches/program.json`](../../data/base-batches/program.json) → `current_cohort`. If `status` is `not_announced`, **tell the user explicitly**: "Base Batches 004 has not been announced as of {snapshot_date}. The structure I'll draft against is the previous cohort (003); please verify current dates at https://www.basebatches.xyz/ before submitting." Offer the user three options:
+   - **(A)** draft the submission anyway as preparation for when 004 opens (recommended);
+   - **(B)** check the homepage first and come back;
+   - **(C)** abort.
+   If the user picks (A), proceed with the rest of the workflow but include the cohort-status disclaimer in the final HTML artifact (see Output). If `status` is `open`, just confirm the dates with the user and continue.
 1. Check for `.basestack/idea-context.md` and `.basestack/build-context.md`. Use whatever you find. If neither exists, ask the user to summarize their project in a paragraph.
 2. **Pick track** — Startup vs Student vs Robotics. Read [references/base-batches-guide.md](references/base-batches-guide.md) for eligibility, deadlines, and prizes. Use AskUserQuestion to confirm track.
 3. **Run a fit-check.** For each track requirement (e.g., Startup ≤ ~$250k raised, Student = undergrad, Robotics = robotics expertise), confirm with the user before proceeding.
@@ -81,6 +86,7 @@ If neither exists, **proceed** — interview the user. Do NOT redirect to other 
 
 ## Non-Negotiables
 
+- **Always run the cohort status check first (Workflow step 0). Never silently draft against stale dates.** If `current_cohort.status` is `not_announced`, surface that to the user and include the disclaimer in the artifact.
 - The submission MUST have a working demo link (URL or short Loom). No exceptions.
 - Light paper MUST be ≤ 500 words. Count words and reject overruns. Judges reject overruns.
 - Contracts MUST be deployed to Base Sepolia (testnet) at minimum, ideally Base mainnet, with Basescan verification.
@@ -144,13 +150,14 @@ wc -w docs/base-batches-light-paper.md 2>/dev/null
 ## Output
 
 A single self-contained HTML file at `./base-batches-submission.html` containing:
-1. Project name + tagline
-2. 500-word light paper
-3. Application form copy-paste blocks (every field)
-4. Standard interview prep Q&A (10–15 questions)
-5. SME interview prep Q&A (technical)
-6. Demo Day 3-min pitch script
-7. Pre-submit checklist with pass/fail status
+1. **Cohort status banner** at the top — if 004 is unannounced, the artifact opens with: "Base Batches 004 has not been announced. Verify dates at https://www.basebatches.xyz/ before submitting. The structure below is from cohort 003."
+2. Project name + tagline
+3. 500-word light paper
+4. Application form copy-paste blocks (every field)
+5. Standard interview prep Q&A (10–15 questions)
+6. SME interview prep Q&A (technical)
+7. Demo Day 3-min pitch script
+8. Pre-submit checklist with pass/fail status
 
 ## Telemetry (run last)
 

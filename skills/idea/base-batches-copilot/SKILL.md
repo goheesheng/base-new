@@ -31,7 +31,8 @@ This is a **research** skill — it does not write the submission. For that, use
 
 ## Workflow
 
-1. Read [../../data/base-batches/program.json](../../data/base-batches/program.json) for current cohort facts (tracks, dates, prizes, eligibility).
+0. **Cohort status check (FIRST).** Read [../../data/base-batches/program.json](../../data/base-batches/program.json) → `current_cohort`. If `status` is `not_announced`, tell the user: "Base Batches 004 has not been announced as of {snapshot_date}. I'll score against last cohort's structure as preparation, but exact rules and dates for 004 will be unknown until Base announces. Verify at https://www.basebatches.xyz/." Then proceed with scoring.
+1. Read [../../data/base-batches/program.json](../../data/base-batches/program.json) for prior cohort facts (tracks, dates, prizes, eligibility) under `previous_cohort`.
 2. Read [../../data/base-batches/past-winners.md](../../data/base-batches/past-winners.md) for prior cohort patterns (seed dataset; expand over time).
 3. Interview the user briefly:
    - Team composition (founders, students, robotics?)

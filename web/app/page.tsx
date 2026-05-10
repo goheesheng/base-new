@@ -5,10 +5,50 @@ export default function Home() {
   return (
     <main className="space-y-32">
       <Hero />
+      <CohortStatusBanner />
       <FounderMode />
       <Skills />
       <CTA />
     </main>
+  );
+}
+
+function CohortStatusBanner() {
+  return (
+    <section className="-my-16">
+      <div className="mx-auto max-w-3xl rounded-xl border border-amber/30 bg-amber/[0.06] p-5 md:p-6">
+        <div className="flex items-start gap-4">
+          <span
+            aria-hidden
+            className="mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full border border-amber/40 bg-amber/10 font-mono text-amber"
+          >
+            !
+          </span>
+          <div className="space-y-2">
+            <p className="label-mono text-amber/80">cohort status</p>
+            <p className="text-sm leading-relaxed text-white/85 md:text-[15px]">
+              <strong className="text-white">Base Batches 004 has not been announced yet.</strong>{" "}
+              The dates, tracks, and prize structure shown across the site are
+              from cohort 003 (now closed). Use{" "}
+              <code className="rounded bg-white/[0.06] px-1 py-0.5 font-mono text-xs text-white">
+                /draft
+              </code>{" "}
+              to prep your light paper now — when 004 opens, you{`'`}ll be
+              ready. Verify current dates at{" "}
+              <a
+                href="https://www.basebatches.xyz/"
+                target="_blank"
+                rel="noreferrer"
+                className="text-amber underline decoration-dotted underline-offset-2 hover:text-amber/80"
+              >
+                basebatches.xyz
+              </a>
+              .
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
