@@ -2,116 +2,94 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Retro-pixel display font — VT323 mirrors solana.new's ppMondwest vibe.
-   Loaded via Google Fonts in the layout. */
+/* ===========================================================
+   White canvas. #0000FF for critical words. Nothing else.
+   =========================================================== */
 
 :root {
-  --bg: #000000;
-  --fg: #ededed;
-  --base: #0052FF;
+  --bg: #ffffff;
+  --ink: #0a0a0a;
+  --marker: #0000FF;
 }
 
-html {
+html, body {
   background: var(--bg);
-  color: var(--fg);
-}
-body {
-  background: transparent;
-  color: var(--fg);
+  color: var(--ink);
   -webkit-font-smoothing: antialiased;
-  font-family: Helvetica, Arial, system-ui, sans-serif;
+  font-family: "Plus Jakarta Sans", Inter, system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv11", "tnum";
 }
 
-/* The retro display heading style — used for h1/h2 hero text */
-.font-display {
+/* ============================================================ */
+
+.block-display {
   font-family: VT323, ui-monospace, Menlo, monospace;
-  letter-spacing: -0.04em;
   font-weight: 400;
-  line-height: 0.88;
+  letter-spacing: -0.04em;
+  line-height: 0.85;
 }
 
-/* Tightly tracked uppercase mono labels (terminal headers, eyebrow text) */
 .label-mono {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  font-family: "JetBrains Mono", ui-monospace, Menlo, monospace;
   font-size: 11px;
-  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink);
+  opacity: 0.6;
 }
 
-/* Pill button mirroring solana.new's GitHub badge */
-.pill {
+.mono { font-family: "JetBrains Mono", ui-monospace, Menlo, monospace; }
+
+.crit { color: var(--marker); }
+
+/* Apply-style pill, basebatches.xyz nav button */
+.pill-apply {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 6px 12px;
+  gap: 0.4rem;
+  border: 1px solid var(--ink);
+  background: var(--bg);
+  color: var(--ink);
+  padding: 6px 14px;
   border-radius: 9999px;
-  background: rgba(0,0,0,0.4);
-  border: 1px solid rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.85);
-  font-size: 12px;
-  transition: all 150ms ease;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 150ms ease, color 150ms ease;
 }
-.pill:hover {
-  border-color: rgba(255,255,255,0.25);
-  color: #ffffff;
-}
+.pill-apply:hover { background: var(--ink); color: var(--bg); }
 
-/* macOS-style terminal chrome */
-.terminal {
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.08);
-  background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 100%);
-  overflow: hidden;
-}
-.terminal-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 14px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  background: rgba(255,255,255,0.02);
-}
-.terminal-dots {
+.pill-apply-blue {
   display: inline-flex;
-  gap: 6px;
-}
-.terminal-dots::before,
-.terminal-dots::after,
-.terminal-dots > span {
-  content: "";
-  width: 11px;
-  height: 11px;
-  border-radius: 9999px;
-}
-.terminal-dots::before { background: #FF5F57; }
-.terminal-dots > span  { background: #FEBC2E; }
-.terminal-dots::after  { background: #28C840; }
-.terminal-body {
-  padding: 18px;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-size: 14px;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--marker);
   color: #ffffff;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: opacity 150ms ease;
 }
+.pill-apply-blue:hover { opacity: 0.85; }
 
-/* Generic card surface */
-.card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 12px;
+/* Inline pen-mark hover — blue underline, no offset */
+.pen {
+  text-decoration: none;
+  color: var(--ink);
+  border-bottom: 1px solid currentColor;
+  transition: color 120ms ease, border-color 120ms ease;
 }
-.card:hover { border-color: rgba(255,255,255,0.16); }
+.pen:hover { color: var(--marker); border-color: var(--marker); }
 
-/* Scrollbars in dark surfaces */
-::-webkit-scrollbar { height: 8px; width: 8px; }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 9999px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0ms !important; transition-duration: 0ms !important; }
+}
 
 /* Selection */
-::selection {
-  background: rgba(0, 82, 255, 0.45);
-  color: white;
-}
+::selection { background: var(--marker); color: #fff; }
 
-/* Anchor base */
-a { transition: color 150ms ease; }
+/* Scrollbars */
+::-webkit-scrollbar { height: 6px; width: 6px; }
+::-webkit-scrollbar-thumb { background: rgba(10,10,10,0.20); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(10,10,10,0.4); }

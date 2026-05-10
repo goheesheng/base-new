@@ -3,41 +3,25 @@
 import { useEffect, useReducer, useRef } from "react";
 
 export type TermLine =
-  | { kind: "header"; text: string }
   | { kind: "ascii"; text: string }
+  | { kind: "header"; text: string }
   | { kind: "system"; text: string; pauseAfter?: number }
   | { kind: "user"; text: string; pauseAfter?: number }
   | { kind: "assistant"; text: string; pauseAfter?: number }
   | { kind: "tool"; text: string; pauseAfter?: number };
 
-interface State {
-  idx: number; // current line index
-  cursor: number; // chars typed of current line
-  finished: boolean;
-}
+interface State { idx: number; cursor: number }
+type Action = { type: "tick" } | { type: "advance" };
 
-type Action =
-  | { type: "tick" }
-  | { type: "advance" }
-  | { type: "reset" };
-
-function reducer(state: State, action: Action, total: number): State {
-  switch (action.type) {
-    case "tick":
-      return { ...state, cursor: state.cursor + 1 };
-    case "advance":
-      if (state.idx + 1 >= total) {
-        return { idx: 0, cursor: 0, finished: false };
-      }
-      return { idx: state.idx + 1, cursor: 0, finished: false };
-    case "reset":
-      return { idx: 0, cursor: 0, finished: false };
-  }
+function reducer(s: State, a: Action, total: number): State {
+  if (a.type === "tick") return { ...s, cursor: s.cursor + 1 };
+  // advance — wrap to start when finished
+  return { idx: (s.idx + 1) % total, cursor: 0 };
 }
 
 export function TypingTerminal({
   lines,
-  charsPerSecond = 60,
+  charsPerSecond = 70,
   loop = true,
 }: {
   lines: TermLine[];
@@ -47,16 +31,13 @@ export function TypingTerminal({
   const total = lines.length;
   const [state, dispatch] = useReducer(
     (s: State, a: Action) => reducer(s, a, total),
-    { idx: 0, cursor: 0, finished: false },
+    { idx: 0, cursor: 0 },
   );
   const reduced = useRef(false);
 
-  // Detect prefers-reduced-motion once on mount
   useEffect(() => {
     if (typeof window !== "undefined" && window.matchMedia) {
-      reduced.current = window.matchMedia(
-        "(prefers-reduced-motion: reduce)",
-      ).matches;
+      reduced.current = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     }
   }, []);
 
@@ -64,22 +45,15 @@ export function TypingTerminal({
     if (reduced.current) return;
     const cur = lines[state.idx];
     if (!cur) return;
-
-    // Header/ascii lines render instantly
-    if (cur.kind === "header" || cur.kind === "ascii") {
-      const t = setTimeout(() => dispatch({ type: "advance" }), 200);
+    if (cur.kind === "ascii" || cur.kind === "header") {
+      const t = setTimeout(() => dispatch({ type: "advance" }), 250);
       return () => clearTimeout(t);
     }
-
     if (state.cursor < cur.text.length) {
-      const baseMs = 1000 / charsPerSecond;
-      // Slight jitter so it feels human
-      const jitter = baseMs * (0.7 + Math.random() * 0.7);
-      const t = setTimeout(() => dispatch({ type: "tick" }), jitter);
+      const base = 1000 / charsPerSecond;
+      const t = setTimeout(() => dispatch({ type: "tick" }), base * (0.7 + Math.random() * 0.7));
       return () => clearTimeout(t);
     }
-
-    // Line finished — pause then advance
     const pause = (cur as { pauseAfter?: number }).pauseAfter ?? 600;
     const isLast = state.idx === total - 1;
     if (isLast && !loop) return;
@@ -88,7 +62,7 @@ export function TypingTerminal({
   }, [state.idx, state.cursor, lines, charsPerSecond, loop, total]);
 
   return (
-    <div className="space-y-2 font-mono text-[12px] leading-relaxed">
+    <div className="space-y-2 mono text-[12px] leading-[18px]">
       {lines.map((l, i) => {
         if (i > state.idx) return null;
         const isCurrent = i === state.idx;
@@ -98,7 +72,12 @@ export function TypingTerminal({
             ? l.text.slice(0, state.cursor)
             : l.text;
         return (
-          <Line key={i} kind={l.kind} text={shown} typing={isCurrent && !reduced.current} />
+          <Line
+            key={i}
+            kind={l.kind}
+            text={shown}
+            typing={isCurrent && !reduced.current}
+          />
         );
       })}
     </div>
@@ -116,18 +95,18 @@ function Line({
 }) {
   if (kind === "ascii") {
     return (
-      <pre className="select-none whitespace-pre text-[8px] leading-[1.05] text-white/30 sm:text-[10px]">
+      <pre className="select-none whitespace-pre text-[8px] leading-[1.05] text-ink-40 sm:text-[9px]">
         {text}
       </pre>
     );
   }
   if (kind === "header") {
-    return <p className="text-center text-[11px] text-white/40">{text}</p>;
+    return <p className="text-center text-[10px] uppercase tracking-[0.16em] text-ink-40">{text}</p>;
   }
   if (kind === "user") {
     return (
-      <p className="text-white/90">
-        <span className="select-none text-white/30">{"› "}</span>
+      <p className="text-ink">
+        <span className="select-none crit">{"› "}</span>
         {text}
         {typing && <Caret />}
       </p>
@@ -135,7 +114,7 @@ function Line({
   }
   if (kind === "assistant") {
     return (
-      <p className="text-white/85">
+      <p className="text-ink-80">
         {text}
         {typing && <Caret />}
       </p>
@@ -143,35 +122,26 @@ function Line({
   }
   if (kind === "tool") {
     return (
-      <p className="text-white/55">
-        <ToolPrefix />
-        <span className="ml-1">{stripPrefix(text)}</span>
+      <p className="text-ink-60">
+        <span className="crit">✓</span>{" "}
+        {text.replace(/^✓\s*/, "")}
         {typing && <Caret />}
       </p>
     );
   }
-  // system
   return (
-    <p className="text-white/45">
+    <p className="text-ink-60">
       {text}
       {typing && <Caret />}
     </p>
   );
 }
 
-function ToolPrefix() {
-  return <span className="text-mint">✓</span>;
-}
-
-function stripPrefix(text: string): string {
-  return text.replace(/^✓\s*/, "");
-}
-
 function Caret() {
   return (
     <span
       aria-hidden
-      className="ml-0.5 inline-block h-[1em] w-[0.5ch] -translate-y-[2px] animate-pulse bg-white/70 align-middle"
+      className="ml-0.5 inline-block h-[1em] w-[0.5ch] -translate-y-[2px] animate-pulse bg-marker align-middle"
       style={{ animationDuration: "1s" }}
     />
   );
