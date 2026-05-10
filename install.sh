@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# superstack — one-command bootstrap
-# Usage: curl -fsSL https://raw.githubusercontent.com/sendaifun/solana-new-cli/main/install.sh | bash
+# basestack — one-command bootstrap (npm-package path)
+# Usage: curl -fsSL https://raw.githubusercontent.com/goheesheng/base-new/main/install.sh | bash
 set -euo pipefail
 
 # --- Branding ---
-PRODUCT_NAME="superstack"
-NPM_PACKAGE="superstack"
-GITHUB_REPO="sendaifun/solana-new-cli"
+PRODUCT_NAME="basestack"
+NPM_PACKAGE="basestack"
+GITHUB_REPO="goheesheng/base-new"
 GITHUB_URL="https://github.com/${GITHUB_REPO}.git"
 
 # --- Colors ---
@@ -27,11 +27,11 @@ has_cmd() { command -v "$1" >/dev/null 2>&1; }
 
 # --- Banner ---
 printf "\n"
-printf "  ${CYAN}${BOLD} ___ _   _ ___ ___ ___ ___ _____ _   ___ _  __${RESET}\n"
-printf "  ${CYAN}${BOLD}/ __| | | | _ \\ __| _ \\ __|_   _/_\\ / __| |/ /${RESET}\n"
-printf "  ${CYAN}${BOLD}\\__ \\ |_| |  _/ _||   /__ \\ | |/ _ \\ (__| ' < ${RESET}\n"
-printf "  ${CYAN}${BOLD}|___/\\___/|_| |___|_|_\\___/ |_/_/ \\_\\___|_|\\_\\\\${RESET}\n"
-printf "  ${DIM}Ship on Solana — Idea to Launch${RESET}\n\n"
+printf "  ${CYAN}${BOLD} ___   _   ___ ___ ___ _____ _   ___ _  __${RESET}\n"
+printf "  ${CYAN}${BOLD}| _ ) /_\\ / __| __/ __|_   _/_\\ / __| |/ /${RESET}\n"
+printf "  ${CYAN}${BOLD}| _ \\/ _ \\\\__ \\ _|\\__ \\ | |/ _ \\ (__| ' < ${RESET}\n"
+printf "  ${CYAN}${BOLD}|___/_/ \\_\\___/___|___/ |_/_/ \\_\\___|_|\\_\\\\${RESET}\n"
+printf "  ${DIM}Ship on Base — Idea to Base Batches${RESET}\n\n"
 
 # --- Prerequisites ---
 log "Checking prerequisites..."
@@ -47,7 +47,7 @@ fi
 ok "Node.js $(node -v)"
 ok "npm $(npm -v)"
 
-# --- Install superstack globally ---
+# --- Install basestack globally ---
 if ! has_cmd "$PRODUCT_NAME"; then
   log "Installing ${PRODUCT_NAME} globally..."
   if ! npm install -g "$NPM_PACKAGE"; then
@@ -87,7 +87,7 @@ else
   fi
 fi
 
-# --- Helper to run superstack ---
+# --- Helper to run basestack ---
 run_ss() {
   if has_cmd "$PRODUCT_NAME"; then
     "$PRODUCT_NAME" "$@"
@@ -148,20 +148,18 @@ printf "\n"
 printf "  ${GREEN}${BOLD}Setup complete!${RESET}\n\n"
 
 printf "  ${BOLD}Get started${RESET} ${DIM}— open Claude and ask:${RESET}\n\n"
-printf "    ${CYAN}claude \"What should I build in crypto?\"${RESET}          ${DIM}→ Idea phase${RESET}\n"
-printf "    ${CYAN}claude \"Help me build the MVP\"${RESET}                   ${DIM}→ Build phase${RESET}\n"
-printf "    ${CYAN}claude \"Deploy to mainnet\"${RESET}                       ${DIM}→ Launch phase${RESET}\n"
+printf "    ${CYAN}claude \"What should I build for Base Batches?\"${RESET}    ${DIM}→ Idea phase${RESET}\n"
+printf "    ${CYAN}claude \"Help me build a Mini App on Base\"${RESET}        ${DIM}→ Build phase${RESET}\n"
+printf "    ${CYAN}claude \"Submit to Base Batches\"${RESET}                  ${DIM}→ Launch phase${RESET}\n"
 printf "\n"
 printf "  ${DIM}Or invoke a skill directly:${RESET}\n\n"
-printf "    ${CYAN}claude \"/find-next-crypto-idea I want to build in DeFi\"${RESET}\n"
-printf "    ${CYAN}claude \"/scaffold-project Set up my Anchor workspace\"${RESET}\n"
+printf "    ${CYAN}claude \"/find-next-crypto-idea I want to build on Base\"${RESET}\n"
+printf "    ${CYAN}claude \"/scaffold-project Set up Foundry + OnchainKit\"${RESET}\n"
 printf "    ${CYAN}claude \"/build-with-claude Help me build the MVP\"${RESET}\n"
 printf "    ${CYAN}claude \"/competitive-landscape Who are my competitors?\"${RESET}\n"
-printf "    ${CYAN}claude \"/defillama-research Show me DeFi opportunities\"${RESET}\n"
+printf "    ${CYAN}claude \"/defillama-research Show me Base DeFi opportunities\"${RESET}\n"
 printf "    ${CYAN}claude \"/roast-my-product Be brutal — what sucks?\"${RESET}\n"
-printf "    ${CYAN}claude \"/product-review Review my product's UX\"${RESET}\n"
-printf "    ${CYAN}claude \"/create-pitch-deck Help me pitch to investors\"${RESET}\n"
-printf "    ${CYAN}claude \"/marketing-video Create a promo video\"${RESET}\n"
+printf "    ${CYAN}claude \"/submit-to-base-batches Prep my submission\"${RESET}\n"
 printf "\n"
 printf "  ${DIM}Skills auto-activate based on your prompt. No CLI needed.${RESET}\n"
 printf "\n"

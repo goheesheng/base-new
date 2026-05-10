@@ -1,123 +1,127 @@
-# CLAUDE.md — superstack
+# CLAUDE.md — basestack (base-new)
 
-## What This Is
+## What this is
 
-Skills and knowledge base to ship on Solana — Idea to Launch. 32 journey skills, 106 repos, 79 ecosystem skills, 36 MCP servers.
+Skills and knowledge base to ship on Base — Idea to Base Batches. A Base-focused fork of `sendaifun/solana-new`.
 
 ## Install
 
 ```bash
-curl -fsSL https://www.solana.new/setup.sh | bash
+curl -fsSL https://base.new/setup.sh | bash
+```
+
+If the domain isn't live yet:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/goheesheng/base-new/main/public/setup.sh \
+  | BASESTACK_BASE_URL="https://raw.githubusercontent.com/goheesheng/base-new/main/public" bash
 ```
 
 ## Usage
 
-Users invoke skills directly via Claude Code:
+Users invoke skills via Claude Code:
 
 ```bash
-claude "/find-next-crypto-idea What should I build?"
-claude "/scaffold-project Set up my workspace"
-claude "/deploy-to-mainnet Ship it"
+claude "/submit-to-base-batches Prep my Base Batches submission"
+claude "/base-batches-copilot Which track should I apply to?"
+claude "/find-next-crypto-idea What should I build on Base?"
+claude "/scaffold-project Set up Foundry + OnchainKit"
 ```
 
-## Journey Skills
+## Wedge skill
 
-32 skills across 4 phases — user just asks naturally, right skill activates.
+`submit-to-base-batches` (under `skills/launch/`) is the wedge. It works standalone — even on projects that did not use any other basestack skill. It produces:
 
-| Phase | Skill | Trigger Prompt |
-|-------|-------|---------------|
-| Learn | `solana-beginner` | "I'm new to Solana — teach me" |
-| Learn | `learn` | "What have we learned?" |
-| Idea | `find-next-crypto-idea` | "What should I build in crypto?" |
-| Idea | `validate-idea` | "Validate this idea" |
-| Idea | `competitive-landscape` | "Who are my competitors?" |
-| Idea | `defillama-research` | "Show me DeFi opportunities on Solana" |
-| Idea | `colosseum-copilot` | "Search Colosseum hackathon projects" |
-| Build | `scaffold-project` | "Scaffold my project" |
-| Build | `build-with-claude` | "Help me build the MVP" |
-| Build | `virtual-solana-incubator` | "Deep dive into Solana and Rust" |
-| Build | `build-defi-protocol` | "Build a DeFi protocol" |
-| Build | `build-data-pipeline` | "Build an indexer" |
-| Build | `build-mobile` | "Build a mobile app" |
-| Build | `launch-token` | "Launch a token" |
-| Build | `brand-design` | "Pick brand colors" |
-| Build | `frontend-design-guidelines` | "Build a frontend" |
-| Build | `number-formatting` | "Format numbers in my UI" |
-| Build | `page-load-animations` | "Fix my page load animations" |
-| Build | `design-taste` | "This looks generic / not premium" |
-| Build | `navigate-skills` | "What skills are available?" |
-| Build | `roast-my-product` | "Roast my product — be brutal" |
-| Build | `product-review` | "Review my product's UX" |
-| Build | `review-and-iterate` | "Review my code" |
-| Build | `cso` | "Run a security audit" |
-| Build | `verify-humanity-poh` | "Filter bots from my airdrop / DAO / NFT mint" |
-| Build | `debug-program` | "Debug my program" |
-| Launch | `deploy-to-mainnet` | "Deploy to mainnet" |
-| Launch | `create-pitch-deck` | "Create a pitch deck" |
-| Launch | `submit-to-hackathon` | "Prepare my hackathon submission" |
-| Launch | `marketing-video` | "Create a marketing video" |
-| Launch | `video-craft` | "Make my video frames look better" |
-| Launch | `apply-grant` | "Apply for Agentic Engineering Grant" |
+1. A 500-word light paper (hard ceiling enforced).
+2. Pre-filled application form copy.
+3. Standard founder interview prep.
+4. SME (technical) interview prep.
+5. 3-minute Demo Day pitch script.
+6. Pre-submit checklist (demo URL, Basescan-verified contracts, GitHub, README quick-start, word count).
+7. A single self-contained HTML artifact at `./base-batches-submission.html`.
 
-Skills live in `skills/<phase>/<skill-name>/`. To add a new skill, create a folder with `SKILL.md` + `references/` + `agents/openai.yaml`.
+## Skill priority for routing
 
-**Skill routing**: `skills/SKILL_ROUTER.md` is a shared routing table. Each SKILL.md references it so the AI can auto-correct if the wrong skill is invoked.
+When the user's prompt mentions Base Batches, light paper, the 500-word artifact, demo day, or interview prep — route to `submit-to-base-batches`. When the prompt is about which track to apply to, past cohorts, or track fit — route to `base-batches-copilot`.
 
-**Shared guides** (step-by-step commands):
-- `skills/data/guides/rpc-wallet-guide.md` — RPC + wallet setup for dev and production
-- `skills/data/guides/deploy-runbook.md` — Deploy devnet → mainnet with verification
-- `skills/data/guides/security-checklist.md` — P0-P3 security audit with exact grep commands
+For chain-agnostic phases (idea, validation, pitch, video) the upstream Solana-flavored skills work as-is.
 
-## What's Indexed
+For chain-specific build skills (`scaffold-project`, `deploy-to-mainnet`, `debug-program`, `build-defi-protocol`, `launch-token`, `verify-humanity-poh`, `virtual-solana-incubator`) — these still assume Solana. Use them as a structural guide; verify chain-specific instructions before running. Base-native rewrites are tracked in the README roadmap.
 
-| Catalog | Count | File |
-|---------|-------|------|
-| Repos | 81 | `cli/data/clonable-repos.json` |
-| Skills | 79 | `cli/data/solana-skills.json` |
-| MCPs | 53 | `cli/data/solana-mcps.json` |
+## Phase handoff
 
-## File Map
+```
+.basestack/idea-context.md         → scaffold-project reads to pick the stack
+.basestack/build-context.md        → submit-to-base-batches reads to draft the light paper
+.basestack/base-batches-research.md → submit-to-base-batches reads for track + gap analysis
+.basestack/submission-context.md   → emitted by submit-to-base-batches for follow-up runs
+```
+
+Context files are optional, never gates. If missing, the skill interviews directly.
+
+## File map
 
 ```
 cli/
-  branding.ts               Single source of truth for all brand strings
-  index.ts                  Command dispatcher, agent output, help
-  telemetry.ts              Skill usage tracking (Convex + local JSONL)
-  init.ts                   Auto-install skills to ~/.claude/skills/ and ~/.codex/skills/
+  branding.ts                # single source of truth for product strings (basestack)
+  index.ts                   # command dispatcher
+  telemetry.ts               # skill usage tracking (Convex + local JSONL)
+  init.ts                    # auto-install skills to ~/.claude/skills/ etc
   data/
-    clonable-repos.json     106 repos (Solana official, SendAI, Metaplex, DeFi, etc.)
-    solana-skills.json      79 skills (15 official + 64 community)
-    solana-mcps.json        36 MCP servers
+    clonable-repos.json      # legacy Solana repos (rewrite pending for Base)
+    solana-skills.json       # legacy Solana skills (rewrite pending)
+    solana-mcps.json         # legacy MCPs (rewrite pending)
 skills/
-  SKILL_ROUTER.md           Shared routing table — AI auto-corrects wrong skill
-  idea/                     Discovery & planning skills (7 skills, includes solana-beginner, learn)
-  build/                    Implementation skills (19 skills, includes virtual-solana-incubator, roast-my-product, product-review, cso, page-load-animations, number-formatting, design-taste, verify-humanity-poh)
-  launch/                   Go-to-market skills (6 skills, includes marketing-video, apply-grant, video-craft)
+  SKILL_ROUTER.md            # Base skills listed first
+  README.md                  # skills overview + roadmap
+  idea/
+    base-batches-copilot/    # NEW — track fit + cohort research
+    find-next-crypto-idea/   # chain-agnostic
+    validate-idea/           # chain-agnostic
+    competitive-landscape/   # chain-agnostic
+    defillama-research/      # works for Base (filter chain)
+    colosseum-copilot/       # legacy Solana, kept for reference
+    solana-beginner/         # legacy Solana
+    learn/                   # chain-agnostic
+  build/                     # mostly Solana-flavored; rewrites pending
+  launch/
+    submit-to-base-batches/  # NEW — wedge skill
+    submit-to-hackathon/     # legacy Colosseum prep
+    create-pitch-deck/       # chain-agnostic
+    marketing-video/         # chain-agnostic
+    deploy-to-mainnet/       # Solana-flavored; Base rewrite pending
+    apply-grant/             # Solana grant flavored
+    video-craft/             # chain-agnostic
+    tone-guide.md
   data/
-    guides/                 Shared guides (RPC+wallet, deploy, security, curated ideas)
-    solana-knowledge/       6 knowledge area docs + cookbook index (covers all of solana.com)
-    specs/                  Phase handoff JSON contracts
-    ideas/                  114+ curated ideas from YC, a16z, Alliance, Superteam
-    defi/                   DefiLlama OpenAPI spec
-convex/
-  schema.ts                 Feedback + telemetry tables
-  feedback.ts               Feedback submission mutation
-  telemetry.ts              Skill usage tracking mutation + queries
-setup                       One-command install script
+    base-batches/            # NEW — program.json, past-winners.md
+    base-knowledge/          # NEW — Base primitives reference
+    colosseum/               # legacy
+    solana-knowledge/        # legacy
+    ideas/                   # 114+ curated startup ideas (filter for Base)
+    defi/                    # DefiLlama API spec
+    guides/                  # shared guides (some chain-agnostic, some Solana)
+    specs/                   # phase handoff JSON contract
+public/
+  setup.sh                   # one-command install (downloads skills.tar.gz)
+scripts/
+  package-skills.sh          # builds public/skills.tar.gz
+convex/                      # opt-in telemetry backend
 ```
 
 ## Conventions
 
-- **ESM-only**: All imports use `.js` extensions (NodeNext module resolution)
-- **Strict TypeScript**: strict mode, no implicit any
-- **No runtime deps**: Only devDependencies (tsx, typescript, @types/node) + convex
-- **Agent-first**: Designed for agent consumption
-- **Single source of truth**: All branding in `cli/branding.ts`
+- ESM-only (`.js` import extensions, NodeNext module resolution).
+- Strict TypeScript, no implicit any.
+- Skill SKILL.md files have frontmatter (`name`, `description`) — no other front-matter fields.
+- All skills include the same telemetry preamble + telemetry coda; the body in between is what differs.
+- Branding strings live in `cli/branding.ts` — change there, not scattered.
+- `~/.basestack/` is the config dir; `.basestack/` is the project-local context dir. Skills must reference both correctly (not `~/.superstack/`).
 
-<!-- convex-ai-start -->
-This project uses [Convex](https://convex.dev) as its backend.
+## Roadmap
 
-When working on Convex code, **always read `convex/_generated/ai/guidelines.md` first** for important guidelines on how to correctly use Convex APIs and patterns. The file contains rules that override what you may have learned about Convex from training data.
+See README.md "Roadmap" — Base-native rewrites for the build phase are the highest priority after the wedge skill is shipping.
 
-Convex agent skills for common tasks can be installed by running `npx convex ai-files install`.
-<!-- convex-ai-end -->
+## Credit
+
+This fork preserves the architecture and many skills from `sendaifun/solana-new` by SendAI + Superteam. Replacements and additions are noted as "NEW" above.

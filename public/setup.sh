@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# superstack — one-command install & update
-# Install: curl -fsSL https://www.solana.new/setup.sh | bash
-# Update:  curl -fsSL https://www.solana.new/setup.sh | bash -s -- --update
+# basestack — one-command install & update
+# Install: curl -fsSL https://base.new/setup.sh | bash
+# Update:  curl -fsSL https://base.new/setup.sh | bash -s -- --update
 set -euo pipefail
 
 # --- Branding ---
-PRODUCT_NAME="superstack"
-BASE_URL="https://www.solana.new"
+PRODUCT_NAME="basestack"
+BASE_URL="${BASESTACK_BASE_URL:-https://base.new}"
 
 # --- Colors ---
 RED='\033[0;31m'
@@ -119,8 +119,8 @@ EOF
     CODEX_DIR="$HOME/.codex/skills"
     AGENTS_DIR="$HOME/.agents/skills"
 
-    # Known superstack skill names (hardcoded fallback)
-    KNOWN_SKILLS="find-next-crypto-idea validate-idea competitive-landscape defillama-research colosseum-copilot solana-beginner learn scaffold-project build-with-claude virtual-solana-incubator build-defi-protocol build-data-pipeline build-mobile launch-token roast-my-product product-review review-and-iterate cso debug-program deploy-to-mainnet create-pitch-deck submit-to-hackathon marketing-video apply-grant frontend-design-guidelines brand-design"
+    # Known basestack skill names (hardcoded fallback)
+    KNOWN_SKILLS="find-next-crypto-idea validate-idea competitive-landscape defillama-research base-batches-copilot base-beginner solana-beginner learn scaffold-project build-with-claude evm-incubator virtual-solana-incubator build-defi-protocol build-data-pipeline build-mobile build-mini-app launch-token roast-my-product product-review review-and-iterate cso debug-program debug-contract deploy-to-mainnet create-pitch-deck submit-to-base-batches submit-to-hackathon marketing-video apply-grant frontend-design-guidelines brand-design smart-wallet-ux agent-payments-x402"
 
     for dir in "$SKILLS_DIR" "$CODEX_DIR" "$AGENTS_DIR"; do
       [ -d "$dir" ] || continue
@@ -142,18 +142,19 @@ fi
 
 # --- Banner ---
 printf "\n"
-printf "  ${CYAN}${BOLD} ___ _   _ ___ ___ ___ ___ _____ _   ___ _  __${RESET}\n"
-printf "  ${CYAN}${BOLD}/ __| | | | _ \\ __| _ \\ __|_   _/_\\ / __| |/ /${RESET}\n"
-printf "  ${CYAN}${BOLD}\\__ \\ |_| |  _/ _||   /__ \\ | |/ _ \\ (__| ' < ${RESET}\n"
-printf "  ${CYAN}${BOLD}|___/\\___/|_| |___|_|_\\___/ |_/_/ \\_\\___|_|\\_\\\\${RESET}\n"
+printf "  ${CYAN}${BOLD} ___   _   ___ ___ ___ _____ _   ___ _  __${RESET}\n"
+printf "  ${CYAN}${BOLD}| _ ) /_\\ / __| __/ __|_   _/_\\ / __| |/ /${RESET}\n"
+printf "  ${CYAN}${BOLD}| _ \\/ _ \\\\__ \\ _|\\__ \\ | |/ _ \\ (__| ' < ${RESET}\n"
+printf "  ${CYAN}${BOLD}|___/_/ \\_\\___/___|___/ |_/_/ \\_\\___|_|\\_\\\\${RESET}\n"
 if [ "$UPDATE_MODE" = true ]; then
   printf "  ${DIM}Updating skills...${RESET}\n\n"
 else
-  printf "  ${DIM}Ship on Solana — Idea to Launch${RESET}\n\n"
-  printf "  ${BOLD}i'm your solana buddy by SendAI & Superteam.${RESET}\n\n"
-  printf "  ${DIM}i'll help you end-to-end in your solana project development:${RESET}\n"
-  printf "  ${DIM}from idea research & generation to building DeFi contracts${RESET}\n"
-  printf "  ${DIM}or integrating payments to launching the product pitch!${RESET}\n\n"
+  printf "  ${DIM}Ship on Base — Idea to Base Batches${RESET}\n\n"
+  printf "  ${BOLD}i'm your Base buddy — built to win Base Batches.${RESET}\n\n"
+  printf "  ${DIM}i'll help you end-to-end on your Base project:${RESET}\n"
+  printf "  ${DIM}from idea research to Foundry contracts, OnchainKit UIs,${RESET}\n"
+  printf "  ${DIM}Mini Apps, Smart Wallet UX — and a Base Batches submission${RESET}\n"
+  printf "  ${DIM}with a 500-word light paper that judges actually read.${RESET}\n\n"
 fi
 
 # --- Prerequisites ---
@@ -477,14 +478,14 @@ EOF
   local NAME_D=$(_f "$PASS_NAME" $VAL_W) ISS_D=$(_f "$PASS_ISSUED" $VAL_W)
   local CLS_D=$(_f "FOUNDING  BUILDER" $VAL_W) LVL_D=$(_f "◆  ${GH_DISPLAY}" $VAL_W)
   local S1=$(_f "○ IDEA" 10) S2=$(_f "○ BUILD" 10) S3=$(_f "○ SHIP" 10)
-  local OL=$(_f "SUPERTEAM" 18) OM=$(_fc "solana.new" 16)
+  local OL=$(_f "BASE BATCHES" 18) OM=$(_fc "base.new" 16)
   local ST="╭───────╮" SA="│ $(_fc "$SEAL_T" 5) │" SD="│ $(_fc "$SEAL_M" 5) │"
   local SY="│ $(_fc "$SEAL_B" 5) │" SB="╰───────╯"
 
   echo ""
   printf "  ${D}      "; _rep "╌ " 34; printf "${R}\n"
   printf "  ${GD}╔"; _rep "═" $SW; printf "╕ ╔"; _rep "═" $MW; printf "╗ ╕"; _rep "═" $SW; printf "╗${R}\n"
-  _L '' '│'; _rowlr " ${GB}◆ SOLANA·NEW  |  FOUNDER PASS${R}${BG}" "${GD}N° ${PASS_NO_FMT}${R}${BG} "; _R '' '│'
+  _L '' '│'; _rowlr " ${GB}◆ BASE·NEW  |  BATCHES PASS${R}${BG}" "${GD}N° ${PASS_NO_FMT}${R}${BG} "; _R '' '│'
   _L '' '│'; _row " ${GK}$(_rep '┄' $((MW-2)))${R}${BG} "; _R '' '│'
   _L '' '╯'; _row "$(_f '' $MW)"; _R '' '╰'
   _L 'S' ' '; _row " ${GK}NAME  ${GK}····· ${GB}${NAME_D}${R}${BG}"; _R '' ' '
@@ -496,7 +497,7 @@ EOF
   _L '' '╮'; _row "$(_f '' $MW)"; _R '' '╭'
   _L '' '│'; _row " ${GK}STAMPS ${GK}···  ${G}${S1}${R}${BG}  ${G}${S2}${R}${BG}  ${G}${S3}${R}${BG}"; _R '' '│'
   _L '' '│'; _row " ${GK}$(_rep '─' $((MW-10)))${R}${BG}     "; _R '' '│'
-  _L '' '│'; _row "$(_fc "you're now a certified agentic engineer on solana" $MW | sed "s/^/${G}/" | sed "s/$/${R}${BG}/")"; _R '' '│'
+  _L '' '│'; _row "$(_fc "you're now a certified Base Batches builder" $MW | sed "s/^/${G}/" | sed "s/$/${R}${BG}/")"; _R '' '│'
   _L '' '│'; _row "     ${GK}$(_rep '─' $((MW-10)))${R}${BG}     "; _R '' '│'
   printf "  ${GD}║${BG}$(_f '' $SW)${GD}│ ╠"; _rep "═" $MW; printf "╣ │${BG}$(_f '' $SW)${GD}║${R}\n"
   _L '' '│'; _rowlr " ${D}${OL}${R}${BG}  ${GK}${OM}${R}${BG}" "${D}SendAI${R}${BG} "; _R '' '│'
@@ -515,25 +516,25 @@ else
 fi
 
 printf "  ${BOLD}Get started${RESET} ${DIM}— open Claude and ask:${RESET}\n\n"
-printf "    ${CYAN}claude \"What should I build in crypto?\"${RESET}          ${DIM}→ Idea phase${RESET}\n"
-printf "    ${CYAN}claude \"Help me build the MVP\"${RESET}                   ${DIM}→ Build phase${RESET}\n"
-printf "    ${CYAN}claude \"Deploy to mainnet\"${RESET}                       ${DIM}→ Launch phase${RESET}\n"
+printf "    ${CYAN}claude \"What should I build for Base Batches?\"${RESET}    ${DIM}→ Idea phase${RESET}\n"
+printf "    ${CYAN}claude \"Help me build a Mini App on Base\"${RESET}        ${DIM}→ Build phase${RESET}\n"
+printf "    ${CYAN}claude \"Submit to Base Batches\"${RESET}                  ${DIM}→ Launch phase${RESET}\n"
 printf "\n"
 printf "  ${DIM}Or invoke a skill directly:${RESET}\n\n"
-printf "    ${CYAN}claude \"/find-next-crypto-idea I want to build in DeFi\"${RESET}\n"
-printf "    ${CYAN}claude \"/scaffold-project Set up my Anchor workspace\"${RESET}\n"
+printf "    ${CYAN}claude \"/find-next-crypto-idea I want to build on Base\"${RESET}\n"
+printf "    ${CYAN}claude \"/scaffold-project Set up my Foundry + OnchainKit workspace\"${RESET}\n"
 printf "    ${CYAN}claude \"/build-with-claude Help me build the MVP\"${RESET}\n"
 printf "    ${CYAN}claude \"/competitive-landscape Who are my competitors?\"${RESET}\n"
-printf "    ${CYAN}claude \"/defillama-research Show me DeFi opportunities\"${RESET}\n"
+printf "    ${CYAN}claude \"/defillama-research Show me Base DeFi opportunities\"${RESET}\n"
 printf "    ${CYAN}claude \"/roast-my-product Be brutal — what sucks?\"${RESET}\n"
 printf "    ${CYAN}claude \"/product-review Review my product's UX\"${RESET}\n"
 printf "    ${CYAN}claude \"/create-pitch-deck Help me pitch to investors\"${RESET}\n"
-printf "    ${CYAN}claude \"/marketing-video Create a promo video\"${RESET}\n"
+printf "    ${CYAN}claude \"/submit-to-base-batches Prep my Base Batches submission\"${RESET}\n"
 printf "\n"
 printf "  ${DIM}Skills auto-activate based on your prompt. No CLI needed.${RESET}\n"
 printf "\n"
 printf "  ${DIM}Or just tell your agent:${RESET}\n"
-printf "  ${GREEN}\"i wanna build something cool for solana hackathon, but idk what to build\"${RESET}\n"
+printf "  ${GREEN}\"i wanna submit to Base Batches but idk what to build\"${RESET}\n"
 printf "\n"
 
 printf "  ${BOLD}Update skills later:${RESET}\n"

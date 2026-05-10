@@ -1,187 +1,134 @@
-# superstack
-[![solana.new](https://img.shields.io/badge/solana.new-Install-black?logo=solana&logoColor=white)](https://solana.new)
-[![Skills](https://img.shields.io/badge/skills-78-blueviolet)](#ecosystem-catalog)
-[![Repos](https://img.shields.io/badge/repos-106-blue)](#ecosystem-catalog)
-[![MCPs](https://img.shields.io/badge/MCPs-36-green)](#ecosystem-catalog)
-[![License](https://img.shields.io/github/license/sendaifun/solana-new)](LICENSE)
+# base-new — basestack for Base Batches
 
-The open-source platform behind [solana.new](https://solana.new) — 25 journey skills that take you from "what should I build?" to a shipped, funded product on Solana. Backed by 106 repos, 78 ecosystem skills, 36 MCP servers, 515+ curated ideas, and a comprehensive Solana knowledge base.
+> Ship on Base — Idea to Base Batches.
+>
+> A Base-focused fork of [`sendaifun/solana-new`](https://github.com/sendaifun/solana-new).
+> The skill framework is preserved; the catalog and the wedge skill (`submit-to-base-batches`) are Base-native.
 
-Works with [Claude Code](https://claude.ai/code) and [Codex](https://openai.com/index/codex/).
+## Why this exists
 
-<img width="5760" height="3240" alt="gh-cover-2" src="https://github.com/user-attachments/assets/dbf27bc1-423d-405b-8c6a-04253f5ba176" />
+Base Batches is the front door to the Base ecosystem (Startup, Student, Robotics tracks → grants + a $50k investment from the Base Ecosystem Fund / Virtuals Fund + Demo Day). Submissions are graded on:
+
+- a working demo,
+- a 500-word light paper,
+- a "Why Base" specific enough to name a primitive,
+- a founder interview,
+- an SME (technical) interview.
+
+`base-new` is a CLI installer that drops Claude Code / Codex / Agents skills onto your machine to take you from idea → built product → submitted application. It mirrors the install pattern of `solana.new`.
 
 ## Install
 
 ```bash
-curl -fsSL https://www.solana.new/setup.sh | bash
+curl -fsSL https://base.new/setup.sh | bash
 ```
 
-Installs skills (Markdown prompts) to `~/.claude/skills/` and `~/.codex/skills/`, plus the Solana knowledge base, guides, and catalog data. Nothing touches your PATH or runs in the background.
+This downloads `skills.tar.gz` and installs into:
 
-**Requirements:** Git and Node.js 20+.
+- `~/.claude/skills/`
+- `~/.codex/skills/`
+- `~/.agents/skills/`
+- `~/.basestack/manifest.json` (uninstall manifest)
+- `~/.basestack/config.json` (telemetry preference)
 
-## Quick Start
+Telemetry is opt-in. See `public/setup.sh` for the full install flow — you can audit it before running.
+
+> Until `base.new` is registered, the install can run from this repo:
+>
+> ```bash
+> curl -fsSL https://raw.githubusercontent.com/goheesheng/base-new/main/public/setup.sh \
+>   | BASESTACK_BASE_URL="https://raw.githubusercontent.com/goheesheng/base-new/main/public" bash
+> ```
+
+## The wedge: `/submit-to-base-batches`
+
+If you take only one skill, take this one. It works **standalone** — even if your project was built without basestack:
 
 ```bash
-claude "/find-next-crypto-idea What should I build on Solana?"
-claude "/scaffold-project Set up my workspace"
-claude "/build-with-claude Help me build the MVP"
-claude "/deploy-to-mainnet Ship it"
+claude "/submit-to-base-batches Prep my Base Batches submission"
 ```
 
-Every skill interviews you first — never assumes.
+What it does:
 
-## Journey Skills
+1. Reads `.basestack/idea-context.md` and `.basestack/build-context.md` if they exist; otherwise interviews you.
+2. Picks the right track (Startup / Student / Robotics) with a fit-check rubric.
+3. Drafts the **500-word light paper** (hard ceiling enforced).
+4. Pre-fills every application form field as a copy-paste block.
+5. Preps the standard founder interview and the SME (technical) interview.
+6. Generates a 3-minute Demo Day pitch script.
+7. Runs the pre-submit checklist (demo URL, contracts on Basescan, public repo, README quick-start, light-paper word count).
+8. Emits a single self-contained HTML artifact.
 
-25 skills across 4 phases. You ask naturally, the right skill activates.
+## Phases
 
-```
-  LEARN                  IDEA                     BUILD                         LAUNCH
-  ──────────────────     ──────────────────────   ───────────────────────────   ──────────────────────
-  solana-beginner        find-next-crypto-idea    scaffold-project              deploy-to-mainnet
-  learn                  validate-idea            build-with-claude             create-pitch-deck
-                         competitive-landscape    virtual-solana-incubator      submit-to-hackathon
-                         defillama-research       build-defi-protocol           marketing-video
-                         colosseum-copilot        build-data-pipeline
-                                                  build-mobile
-                                                  launch-token
-                                                  roast-my-product
-                                                  product-review
-                                                  review-and-iterate
-                                                  cso
-                                                  debug-program
-                                                  navigate-skills
-```
+| Phase | Skills (Base-native first) |
+|---|---|
+| Base Batches | `base-batches-copilot`, `submit-to-base-batches` |
+| Idea | `find-next-crypto-idea`, `validate-idea`, `competitive-landscape`, `defillama-research` |
+| Build | `scaffold-project`*, `build-with-claude`, `review-and-iterate`, `cso`, `roast-my-product`, `product-review`, `frontend-design-guidelines`, `brand-design`, `page-load-animations`, `number-formatting`, `design-taste` |
+| Launch | `submit-to-base-batches`, `deploy-to-mainnet`*, `create-pitch-deck`, `marketing-video`, `apply-grant` |
 
-### Learn
+`*` = Solana-flavored, useful as a guide but Base rewrite pending. See `skills/README.md` for the roadmap.
 
-| Skill | What it does |
-|-------|-------------|
-| `solana-beginner` | Teaches Solana fundamentals adapted to your background (EVM dev, beginner, backend) |
-| `learn` | Reviews, searches, prunes, and exports project learnings across sessions |
-
-### Idea
-
-| Skill | What it does |
-|-------|-------------|
-| `find-next-crypto-idea` | Interviews you to discover and rank crypto startup ideas from 515+ curated sources |
-| `validate-idea` | Stress-tests an idea with a structured validation sprint |
-| `competitive-landscape` | Maps competitors, substitutes, and whitespace across the ecosystem catalog |
-| `defillama-research` | Researches DeFi protocols and market opportunities using real-time TVL data |
-| `colosseum-copilot` | Searches Colosseum hackathon projects for winner patterns and gaps |
-
-### Build
-
-| Skill | What it does |
-|-------|-------------|
-| `scaffold-project` | Sets up workspace with the right repo, skills, MCPs, and architecture |
-| `build-with-claude` | Guides you through MVP implementation step by step |
-| `virtual-solana-incubator` | Deep technical bootcamp — SVM, Rust, PDAs, CPIs, programs |
-| `build-defi-protocol` | Guided DeFi build with security-first patterns, CPIs, and token math |
-| `build-data-pipeline` | Indexes accounts, tracks transactions, builds real-time data infrastructure |
-| `build-mobile` | React Native + Expo + Mobile Wallet Adapter |
-| `launch-token` | Token mint, metadata, distribution, and launch strategy |
-| `roast-my-product` | Harsh, honest product critique — finds every weakness before users do |
-| `product-review` | Balanced UX/quality evaluation with improvement roadmap |
-| `review-and-iterate` | Code review for quality, security, and production readiness |
-| `cso` | Infrastructure-first security audit: secrets, deps, CI/CD, OWASP |
-| `debug-program` | Diagnoses program errors and failed transactions |
-| `navigate-skills` | Browses all installed skills, repos, and MCPs |
-
-### Launch
-
-| Skill | What it does |
-|-------|-------------|
-| `deploy-to-mainnet` | Pre-flight checklist and guided mainnet deployment |
-| `create-pitch-deck` | Structured pitch deck for VCs, hackathons, or grants |
-| `submit-to-hackathon` | Optimized hackathon submission with demo script |
-| `marketing-video` | Code-driven (Remotion) + AI-generated video production |
-
-## How Phases Connect
-
-Each phase writes context to `.superstack/` in your project. The next phase reads it automatically.
+## Repo layout
 
 ```
-find-next-crypto-idea  ──writes──>  .superstack/idea-context.md
-scaffold-project       ──reads───>  .superstack/idea-context.md
-build-with-claude      ──writes──>  .superstack/build-context.md
-deploy-to-mainnet      ──reads───>  .superstack/build-context.md
+base-new/
+├── public/setup.sh           # one-command install, downloads skills.tar.gz
+├── install.sh                # alternative npm-package install path
+├── cli/                      # TS dispatcher + telemetry + catalog data
+│   ├── branding.ts           # SINGLE source of truth for product strings
+│   └── data/                 # repos, skills, MCPs catalogs (Solana — rewrite pending)
+├── skills/
+│   ├── SKILL_ROUTER.md       # routing table — Base skills listed first
+│   ├── README.md             # skills overview
+│   ├── idea/
+│   │   ├── base-batches-copilot/   # NEW — track fit + cohort research
+│   │   └── (find-next-crypto-idea, validate-idea, …)
+│   ├── build/                # mostly Solana-flavored, rewrites pending
+│   ├── launch/
+│   │   ├── submit-to-base-batches/ # NEW — wedge skill
+│   │   ├── submit-to-hackathon/    # legacy Solana/Colosseum prep
+│   │   └── (create-pitch-deck, marketing-video, …)
+│   └── data/
+│       ├── base-batches/     # NEW — program.json, past-winners.md
+│       ├── base-knowledge/   # NEW — Base primitives reference
+│       ├── colosseum/        # legacy
+│       ├── solana-knowledge/ # legacy
+│       └── (ideas, defi, guides, specs)
+├── scripts/
+│   └── package-skills.sh     # builds public/skills.tar.gz from skills/
+└── convex/                   # opt-in telemetry backend
 ```
 
-Context files are optional, not gates. Skip to any phase — the skill asks you directly if context is missing.
-
-## Ecosystem Catalog
-
-Ships with a curated catalog of the Solana ecosystem that skills search and recommend from.
-
-| Catalog | Count | Examples |
-|---------|-------|---------|
-| **Repos** | 106 | Anchor, Pinocchio, Quasar, Doppler, Metaplex, Orca, Raydium, Jupiter, Jito, LiteSVM, Mollusk, Codama, Blueshift, ConnectorKit, Solana Agent Kit, MagicBlock |
-| **Skills** | 78 | 15 official (Solana Foundation) + 63 community (Jupiter, Helius, Kamino, Privy, DFlow, Phoenix, Meteora, Sanctum, QEDGen, Carbium) |
-| **MCPs** | 36 | Helius, Jupiter, Phantom, Orca, Alchemy, Flash Trade, Solscan, DexScreener, Solana Foundation |
-| **Knowledge** | 7 docs | Architecture, programs, protocols, SDKs, app layer, open-source research, Cookbook index |
-| **Guides** | 3 | RPC + wallet setup, deploy runbook, security checklist |
-| **Ideas** | 515+ | Curated from YC, a16z, Alliance, SendAI, and Superteam |
-
-Catalog data lives in `cli/data/`. Skills reference it automatically — you don't need to look anything up.
-
-## Telemetry
-
-Anonymous, opt-in, privacy-first. Tracks which skills get used and how long they take — no code, no file paths, no PII. Default is **off**.
+## Pack the skill bundle
 
 ```bash
-# Check or change in ~/.superstack/config.json
-# Options: "off" (default) | "anonymous" | "community"
+./scripts/package-skills.sh
+# → public/skills.tar.gz, served to install.sh / setup.sh
 ```
 
-## Project Structure
+If you self-host on a domain, point the install URL at it. If you stay on GitHub raw, set `BASESTACK_BASE_URL` to the raw URL.
 
-```
-cli/
-  branding.ts               Single source of truth for all brand strings
-  index.ts                  Command dispatcher and main entry
-  telemetry.ts              Skill usage tracking (Convex + local JSONL)
-  init.ts                   Auto-install skills to ~/.claude/ and ~/.codex/
-  data/
-    clonable-repos.json     106 repos
-    solana-skills.json      78 skills (15 official + 63 community)
-    solana-mcps.json        36 MCP servers
-skills/
-  SKILL_ROUTER.md           Routing table — AI auto-corrects wrong skill
-  idea/                     Discovery & planning (6 skills)
-  build/                    Implementation & review (14 skills)
-  launch/                   Go-to-market (4 skills)
-  data/
-    solana-knowledge/       6 knowledge docs + cookbook index
-    guides/                 Shared runbooks (RPC, deploy, security)
-    ideas/                  515+ curated ideas (JSON + Markdown)
-    specs/                  Phase handoff contracts
-convex/
-  schema.ts                 Telemetry + feedback tables
-  telemetry.ts              Track mutation + queries
-  feedback.ts               Submit mutation
-```
+## Roadmap (Base-native rewrites still to land)
 
-## Contributing
+- `build-mini-app` — Farcaster Mini App via MiniKit + OnchainKit
+- `smart-wallet-ux` — passkey auth, batched calls, paymasters
+- `agent-payments-x402` — agent commerce via x402
+- `evm-incubator` — Solidity / Foundry / OZ / ERC-20 / ERC-4626 / AA
+- `scaffold-project` rewrite for Foundry + OnchainKit + Smart Wallet
+- `deploy-to-mainnet` rewrite for Base Sepolia → mainnet + Basescan verify
+- `debug-contract` — Tenderly, `cast`, `forge debug`
+- `build-defi-protocol` rewrite for Aerodrome, Morpho, Uniswap v4 hooks
+- `cso` rewrite with EVM threat model (reentrancy, oracle, 4626 inflation, sig replay)
+- `verify-humanity` rewrite for World ID / Coinbase Verifications / Privy
 
-We welcome contributions — from adding a repo to the catalog (5 min) to creating a new journey skill. See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide covering all contribution types, supply-chain security rules, and reviewer checklists.
+PRs welcome.
 
-## Credits
+## Credit
 
-Built by [SendAI](https://sendai.fun) and [Superteam](https://superteam.fun). Powered by the Solana ecosystem:
-
-- [Solana Foundation](https://github.com/solana-foundation) — Official dev skill, MCP, and program examples
-- [Helius](https://github.com/helius-labs) — RPC infrastructure, DAS API, MCP server
-- [Jupiter](https://github.com/jup-ag) — DEX aggregation, swaps, perps, skills, and CLI
-- [Metaplex](https://github.com/metaplex-foundation) — NFT standards and tooling
-- [MagicBlock](https://github.com/magicblock-labs) — On-chain gaming, Ephemeral Rollups, BOLT ECS
-- [Orca](https://github.com/orca-so), [Raydium](https://github.com/raydium-io), [Kamino](https://github.com/Kamino-Finance), [Meteora](https://meteora.ag) — DeFi protocols
-- [Privy](https://privy.io), [Phantom](https://phantom.app), [Squads](https://squads.so) — Wallets and auth
-- [Colosseum](https://colosseum.org) — Hackathon data and startup research
-- [DFlow](https://dflow.net), [Sanctum](https://sanctum.so), [Light Protocol](https://lightprotocol.com) — Ecosystem protocols
-- And [50+ more projects](cli/data/solana-skills.json) building the Solana developer ecosystem
+This is a fork of [`sendaifun/solana-new`](https://github.com/sendaifun/solana-new) by SendAI + Superteam. The skill framework, install pattern, telemetry approach, and many of the chain-agnostic skills (`find-next-crypto-idea`, `roast-my-product`, `create-pitch-deck`, `frontend-design-guidelines`, etc.) are theirs. Base-specific skills, catalogs, and rewrites are this fork's.
 
 ## License
 
-[MIT](LICENSE)
+MIT, matching upstream.

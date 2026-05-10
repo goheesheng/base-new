@@ -1,128 +1,131 @@
-# Skills — Learn to Launch
+# Skills — Base Batches Edition
 
-32 Codex/Claude skills that take a Solana developer from "what is Solana?" to a shipped, pitched product. Every skill interviews you first — never assumes.
+Codex / Claude / Agent skills that take a Base builder from "what should I build?" to a submitted Base Batches application. Every skill interviews you first — never assumes.
+
+This is a Base-focused fork of `sendaifun/solana-new`. The skill _framework_ (interview-driven, phase-handoff, telemetry-opt-in, references/) is preserved as-is. Base-native skills are listed first in each phase.
 
 ```
-  LEARN                   IDEA                    BUILD                        LAUNCH
-  ────────────────────    ────────────────────    ────────────────────────     ────────────────────
-  solana-beginner       find-next-crypto-idea   scaffold-project             deploy-to-mainnet
-  learn                   validate-idea           build-with-claude            create-pitch-deck
-                          competitive-landscape   virtual-solana-incubator     submit-to-hackathon
-                          defillama-research      build-defi-protocol          marketing-video
-                                                  build-data-pipeline
-                                                  build-mobile
-                                                  launch-token
+  BASE BATCHES            IDEA                    BUILD                          LAUNCH
+  ────────────────────    ────────────────────    ────────────────────────       ────────────────────
+  base-batches-copilot    find-next-crypto-idea   scaffold-project*              submit-to-base-batches
+  submit-to-base-batches  validate-idea           build-with-claude*             deploy-to-mainnet*
+                          competitive-landscape   review-and-iterate             create-pitch-deck
+                          defillama-research      cso                            marketing-video
                                                   roast-my-product
                                                   product-review
-                                                  review-and-iterate
-                                                  cso
-                                                  debug-program
-                                                  navigate-skills
-                                                  verify-humanity-poh
+                                                  brand-design
+                                                  frontend-design-guidelines
+                                                  page-load-animations
+                                                  number-formatting
+                                                  design-taste
+
+  *  = Solana-flavored (works for guidance, Base rewrite in progress)
 ```
 
-## The Journey
+## The wedge: `submit-to-base-batches`
 
-### Phase 0: Learn — Solana Fundamentals
+If you take only one skill from this repo, take this one:
 
-Understand Solana before you build. Adaptive teaching based on your background.
+```bash
+claude "/submit-to-base-batches Prep my Base Batches submission"
+```
 
-| Skill | What It Does | Example Prompt |
-|-------|-------------|----------------|
-| `solana-beginner` | Teach Solana fundamentals adapted to your background (EVM dev, beginner, backend) | "I'm new to Solana — teach me" |
-| `learn` | Review, search, prune, and export project learnings across sessions | "What have we learned?" |
+It works **standalone** — even if your project was built without basestack. It interviews you, drafts the 500-word light paper (hard ceiling enforced), pre-fills every application field, runs the pre-submit checklist, and emits a single HTML artifact you copy-paste into the application portal.
 
-### Phase 1: Idea — Discovery & Planning
+## The journey
 
-Find what to build, validate it's worth building, and research the market.
+### Phase 0 — Base Batches research
 
-| Skill | What It Does | Example Prompt |
-|-------|-------------|----------------|
-| `find-next-crypto-idea` | Interview you to discover and rank crypto startup ideas | "What should I build in crypto?" |
-| `validate-idea` | Stress-test an idea with a structured validation sprint | "Is this idea worth building?" |
-| `competitive-landscape` | Map competitors, substitutes, and opportunities | "Who are my competitors?" |
-| `defillama-research` | Research DeFi protocols and opportunities using real-time TVL data | "Show me DeFi opportunities on Solana" |
+| Skill | What it does | Example prompt |
+|---|---|---|
+| `base-batches-copilot` | Track-fit analysis, past cohorts, gap analysis | "Which Base Batches track should I apply to?" |
 
-**Output**: `.superstack/idea-context.md` with your chosen idea, scores, validation, and landscape.
+### Phase 1 — Idea
 
-### Phase 2: Build — Implementation
+| Skill | What it does | Example prompt |
+|---|---|---|
+| `find-next-crypto-idea` | Interview-driven idea discovery and ranking | "What should I build on Base?" |
+| `validate-idea` | Structured validation sprint | "Stress-test my idea" |
+| `competitive-landscape` | Map competitors, substitutes, opportunities | "Who else is doing this?" |
+| `defillama-research` | DeFi market research (filter chain to Base) | "Show me Base DeFi opportunities" |
 
-Set up your workspace, build the MVP, review it, and get it roasted.
+**Output**: `.basestack/idea-context.md`.
 
-| Skill | What It Does | Example Prompt |
-|-------|-------------|----------------|
-| `scaffold-project` | Set up workspace with the right repo, skills, and MCPs | "Scaffold my project" |
-| `build-with-claude` | Guide you through MVP implementation step by step | "Help me build this" |
-| `virtual-solana-incubator` | Deep technical bootcamp: SVM, Rust, PDAs, CPIs | "Deep dive into Solana and Rust" |
-| `build-defi-protocol` | Guided DeFi build with CPIs, PDAs, and token math | "Build a DeFi protocol" |
-| `build-data-pipeline` | Index accounts, track transactions, real-time data | "Build an indexer" |
-| `build-mobile` | React Native + mobile wallet adapter | "Build a mobile app" |
-| `launch-token` | Token mint, metadata, distribution | "Launch a token" |
-| `roast-my-product` | Brutal product critique — find every weakness | "Roast my product" |
-| `product-review` | Balanced UX/quality evaluation with improvement roadmap | "Review my product's UX" |
-| `review-and-iterate` | Code review for quality, security, and production readiness | "Review my code" |
-| `cso` | Infrastructure-first security audit: secrets, deps, CI/CD, OWASP | "Run a security audit" |
-| `debug-program` | Diagnose program errors and failed transactions | "Debug my program" |
-| `navigate-skills` | Browse all installed skills, repos, and MCPs | "What skills do I have?" |
-| `verify-humanity-poh` | Integrate Proof of Human API to filter bots from airdrops, DAOs, and NFT mints | "Filter bots from my airdrop" |
+### Phase 2 — Build
 
-**Output**: `.superstack/build-context.md` with your stack, milestones, and review scores.
+Many of these are still Solana-flavored. They produce useful generic patterns; for Base specifics check the integration points yourself or rewrite as you go.
 
-### Phase 3: Launch — Go to Market
+| Skill | What it does | Notes |
+|---|---|---|
+| `scaffold-project` | Workspace setup, repo + skills + MCPs | Solana-flavored — Foundry/OnchainKit rewrite pending |
+| `build-with-claude` | Step-by-step MVP implementation | Mostly chain-agnostic |
+| `review-and-iterate` | Code review for quality + security | Chain-agnostic |
+| `cso` | Infra-first security audit | Useful checklist regardless of chain |
+| `roast-my-product` | Brutal product critique | Chain-agnostic |
+| `product-review` | Balanced UX/quality evaluation | Chain-agnostic |
+| `frontend-design-guidelines` | Web interface rules with Tailwind/shadcn | Chain-agnostic |
+| `brand-design` | Brand palette + typography + voice | Chain-agnostic |
+| `page-load-animations` | Framer-motion recipes | Chain-agnostic |
+| `number-formatting` | Crypto UI number formatting | Chain-agnostic |
+| `design-taste` | Anti-AI-slop design judgment | Chain-agnostic |
 
-Deploy to production, pitch to investors, and submit to hackathons.
+**Output**: `.basestack/build-context.md`.
 
-| Skill | What It Does | Example Prompt |
-|-------|-------------|----------------|
-| `deploy-to-mainnet` | Pre-flight checklist and guided mainnet deployment | "Deploy to mainnet" |
-| `create-pitch-deck` | Structured pitch deck for VCs, hackathons, or grants | "Create a pitch deck" |
-| `submit-to-hackathon` | Optimized hackathon submission with demo script | "Prepare my submission" |
-| `marketing-video` | Code-driven (Remotion) + AI-generated (Renoise) videos | "Create a marketing video" |
+### Phase 3 — Launch (Base Batches submission + GTM)
 
-## How Phases Connect
+| Skill | What it does | Example prompt |
+|---|---|---|
+| **`submit-to-base-batches`** | **Wedge skill — full Base Batches submission** | "Prep my Base Batches submission" |
+| `deploy-to-mainnet` | Deployment checklist | Solana-flavored — Foundry rewrite pending |
+| `create-pitch-deck` | Pitch deck for investors / Demo Day | Chain-agnostic |
+| `marketing-video` | Demo videos via Remotion or AI | Chain-agnostic |
+| `apply-grant` | Grant application helper | Solana-grant flavored |
 
-Each phase writes markdown context to `.superstack/` in your project directory. The next phase reads it automatically.
+## Phase handoff
+
+Each phase writes markdown context to `.basestack/` in your project directory. The next phase reads it automatically.
 
 ```
-idea-context.md ──> scaffold-project reads it to pick the right stack
-build-context.md ──> deploy-to-mainnet reads it to verify readiness
-learnings.md ──> all skills read/write learnings (/learn to manage)
+.basestack/idea-context.md         → scaffold-project reads to pick the stack
+.basestack/build-context.md        → submit-to-base-batches reads to draft the light paper
+.basestack/base-batches-research.md → submit-to-base-batches reads for track + gap analysis
+.basestack/submission-context.md   → emitted by submit-to-base-batches for follow-up runs
 ```
 
 Context files are **optional, not gates**. Every skill proceeds immediately if context is missing — it just asks you directly instead.
 
-## Solana Knowledge Base
+## Base knowledge base
 
-6 reference docs in `data/solana-knowledge/` covering all of solana.com:
+`data/base-knowledge/` is the seed knowledge base, mirroring solana-new's pattern:
 
 | Doc | Covers |
-|-----|--------|
-| `01-what-and-why-solana.md` | Ecosystem, institutional adoption, network metrics |
-| `02-what-makes-solana-unique.md` | PoH, SVM, 8 innovations, Rust, vs EVM |
-| `03-contract-level.md` | Accounts, programs, PDAs, CPIs, Anchor, fees |
-| `04-protocols-and-sdks.md` | Jupiter, Helius, Orca, Metaplex, wallets, tools |
-| `05-app-layer-consumer.md` | Client SDKs, React, mobile |
-| `06-opensource-research.md` | Courses, community, grants, hackathons, repos |
-| `cookbook-index.md` | All 25+ Solana Cookbook recipes with URLs |
+|---|---|
+| `01-what-and-why-base.md` | Base L2, native primitives, when Base actually matters |
 
-Skills reference these automatically based on what you're learning or building.
+`data/base-batches/` holds program facts:
 
-## Getting Started
+| File | Covers |
+|---|---|
+| `program.json` | Tracks, dates, prizes, eligibility (snapshot — verify with homepage) |
+| `past-winners.md` | Past cohort patterns (seed; expand over time) |
 
-Install skills:
+The legacy Solana knowledge base remains under `data/solana-knowledge/` for skills that still reference it.
+
+## Getting started
 
 ```bash
-curl -fsSL https://www.solana.new/setup.sh | bash
+curl -fsSL https://base.new/setup.sh | bash
 ```
 
 Then ask directly:
 
 ```bash
-claude "/find-next-crypto-idea What should I build in crypto?"
-codex "Help me build a DeFi protocol on Solana"
+claude "/submit-to-base-batches Prep my Base Batches submission"
+claude "/find-next-crypto-idea I want to build on Base"
+claude "/base-batches-copilot Which track should I apply to?"
 ```
 
-## Adding a New Skill
+## Adding a new skill
 
 Skills live in the phase folder where they contribute most:
 
@@ -135,50 +138,24 @@ skills/
 
 To add a new skill:
 
-1. Create `skills/<phase>/<skill-name>/SKILL.md` with frontmatter (`name`, `description`)
-2. Add `references/` with methodology and framework markdown files
-3. Add `agents/openai.yaml` with display name and default prompt
-4. Re-run setup to install it
+1. Create `skills/<phase>/<skill-name>/SKILL.md` with frontmatter (`name`, `description`).
+2. Add `references/` with methodology and framework markdown files.
+3. Optionally add `agents/openai.yaml` with display name and default prompt.
+4. Re-run setup to install it.
 
-The skill auto-discovers — no registration needed. Just put it in the right phase folder.
+The skill auto-discovers — no registration needed.
 
-## Directory Structure
+## Roadmap
 
-```
-skills/
-  SKILL_ROUTER.md                        # Routing table — AI auto-corrects wrong skill
-  data/
-    solana-knowledge/                    # 6 knowledge area docs + cookbook index
-    ideas/                               # 114+ curated ideas (YC, a16z, Alliance, Superteam)
-    defi/                                # DefiLlama API spec
-    guides/                              # Shared guides (RPC, deploy, security)
-    specs/
-      phase-handoff.md                   # Context contract between phases
-  idea/
-    solana-beginner/                   # Solana fundamentals (adaptive)
-    learn/                               # Project learnings manager
-    find-next-crypto-idea/               # Interview + rank crypto ideas
-    validate-idea/                       # Validation sprint
-    competitive-landscape/               # Competitor mapping
-    defillama-research/                  # DeFi market research
-  build/
-    scaffold-project/                    # Workspace setup
-    build-with-claude/                   # Guided MVP implementation
-    virtual-solana-incubator/            # Deep technical bootcamp
-    build-defi-protocol/                 # DeFi protocol builder
-    build-data-pipeline/                 # Indexer / webhook / analytics
-    build-mobile/                        # React Native mobile app
-    launch-token/                        # Token launch
-    roast-my-product/                    # Brutal product critique
-    product-review/                      # UX/quality evaluation
-    review-and-iterate/                  # Code review + security
-    cso/                                 # Infrastructure security audit
-    debug-program/                       # Program error diagnosis
-    navigate-skills/                     # Meta skill browser
-    verify-humanity-poh/                 # Bot/sybil detection via Proof of Human API
-  launch/
-    deploy-to-mainnet/                   # Production deployment
-    create-pitch-deck/                   # Pitch deck generator
-    submit-to-hackathon/                 # Hackathon submission
-    marketing-video/                     # Video production
-```
+Highest-priority Base-native rewrites still to land:
+
+- `build-mini-app` (new) — Farcaster Mini App via MiniKit + OnchainKit
+- `smart-wallet-ux` (new) — passkey auth, batched calls, paymasters
+- `agent-payments-x402` (new) — agent commerce via x402
+- `evm-incubator` (replaces `virtual-solana-incubator`) — Solidity, Foundry, OZ, ERC-20/721/1155/4626, AA
+- `scaffold-project` rewrite for Foundry + OnchainKit + Smart Wallet
+- `deploy-to-mainnet` rewrite for Base Sepolia → mainnet + Basescan verify
+- `debug-contract` (replaces `debug-program`) — Tenderly, `cast`, `forge debug`
+- `build-defi-protocol` rewrite for Aerodrome, Morpho, Uniswap v4 hooks, ERC-4626 vaults
+- `cso` rewrite with EVM threat model (reentrancy, oracle, ERC-4626 inflation, signature replay)
+- `verify-humanity` rewrite for World ID / Coinbase Verifications / Privy

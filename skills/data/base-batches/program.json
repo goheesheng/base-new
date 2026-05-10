@@ -1,0 +1,81 @@
+{
+  "program": "Base Batches",
+  "homepage": "https://www.basebatches.xyz/",
+  "snapshot_date": "2026-05-10",
+  "stale_after_days": 60,
+  "verify_at": "https://www.basebatches.xyz/",
+  "tracks": [
+    {
+      "id": "startup",
+      "name": "Startup",
+      "eligibility": [
+        "Pre-seed teams",
+        "Raised less than ~$250k",
+        "Pre-product, pre-launch, or pre-seed stage"
+      ],
+      "application_window": { "open": "2026-02-17", "close": "2026-03-09" },
+      "program_window": { "start": "2026-03-23", "end": "2026-05-15" },
+      "demo_day": "Late May",
+      "prizes": {
+        "top_15": "$10k grant + 8-week virtual program + Demo Day spot",
+        "min_3_teams": "$50k investment from Base Ecosystem Fund"
+      },
+      "submission_requirements": [
+        "Standard application form",
+        "500-word light paper (Problem · Insight · Product · Why Now · Why Base · Traction · Team · Ask)",
+        "Standard founder interview",
+        "Subject Matter Expert (SME) technical interview"
+      ]
+    },
+    {
+      "id": "student",
+      "name": "Student",
+      "eligibility": [
+        "Undergraduate students worldwide",
+        "Cross-university teams allowed"
+      ],
+      "application_window": { "open": "2026-02-17", "close": "2026-04-27" },
+      "demo_day": "Late May",
+      "prizes": {
+        "top_5": "Flights to San Francisco + Demo Day presentation"
+      }
+    },
+    {
+      "id": "robotics",
+      "name": "Robotics (by Virtuals)",
+      "eligibility": [
+        "Builders with robotics expertise",
+        "Strong demonstrated interest in robotics policies"
+      ],
+      "application_window": { "open": "2026-02-16", "close": "2026-03-30" },
+      "program_window": { "start": "2026-04-06", "end": "2026-05-01" },
+      "demo_day": ["2026-05-04", "Late May"],
+      "cohort_size": 10,
+      "resources": [
+        "Access to robotics lab",
+        "~30 Unitree G1 units",
+        "Expenses covered up to $10k"
+      ],
+      "prizes": {
+        "top_3_teams": "$50k investment from Virtuals Fund"
+      }
+    }
+  ],
+  "judging_signals": {
+    "highest_weight": [
+      "Working demo",
+      "Why Base — specific primitive named (Smart Wallet, Mini Apps/MiniKit, OnchainKit, Basenames, Coinbase Verifications, x402, AgentKit, CDP)",
+      "Founder/team quality"
+    ],
+    "common_rejection_reasons": [
+      "Light paper exceeds 500 words",
+      "No deployed contracts (or unverified on Basescan)",
+      "Generic 'Why Base' (e.g., 'cheap and fast')",
+      "Founder interview reveals weak shipping ability",
+      "SME interview reveals contracts are unmodified forks",
+      "Demo URL broken at review time",
+      "Track mismatch (e.g., funded team applying to Student)",
+      "Inflated traction caught in interview"
+    ]
+  }
+}

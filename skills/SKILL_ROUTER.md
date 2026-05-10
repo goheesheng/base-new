@@ -2,7 +2,16 @@
 
 > **For AI agents**: If the user's request doesn't match this skill, find the right one below and switch.
 
-## Learn Phase — Solana Fundamentals
+> **basestack note**: This is a Base-focused fork of `sendaifun/solana-new`. Base-native skills are listed first under each phase. Solana-flavored skills below them are pending rewrite — many still work for chain-agnostic tasks (idea, validation, pitch, video) but the implementation skills assume Solana until rewritten.
+
+## Base Batches Phase — Apply & Ship
+
+| Trigger | Skill | When to use |
+|---------|-------|-------------|
+| "Base Batches", "past Base Batches winners", "track fit", "which track should I apply to", "Base Batches gap analysis" | `base-batches-copilot` | Research Base Batches before applying |
+| "submit to Base Batches", "Base Batches submission", "Base Batches light paper", "500-word light paper", "Base Batches interview prep", "demo day script" | `submit-to-base-batches` | Prepare and optimize the Base Batches application |
+
+## Learn Phase — Base & Solana Fundamentals
 
 | Trigger | Skill | When to use |
 |---------|-------|-------------|
@@ -16,10 +25,11 @@
 | "what should I build", "crypto ideas", "project ideas" | `find-next-crypto-idea` | User has no idea yet, needs discovery |
 | "validate this idea", "is this worth building" | `validate-idea` | User has an idea, needs stress-testing |
 | "who are my competitors", "competitive analysis" | `competitive-landscape` | User wants to map existing players |
-| "DeFi opportunities", "TVL data", "DefiLlama" | `defillama-research` | User wants DeFi market data |
-| "colosseum copilot", "hackathon projects", "winner patterns", "gap analysis" | `colosseum-copilot` | User wants Colosseum hackathon data (requires PAT) |
+| "DeFi opportunities", "TVL data", "DefiLlama" | `defillama-research` | User wants DeFi market data — works for Base; filter chain to Base |
+| "colosseum copilot", "hackathon projects", "winner patterns", "gap analysis" | `colosseum-copilot` | (Solana) Legacy Colosseum dataset; for Base Batches use `base-batches-copilot` |
 
-## Build Phase — Solana Implementation
+## Build Phase — Implementation
+> ⚠️ Implementation skills below currently assume Solana. They produce useful generic patterns but Base-specific rewrites (Foundry, OnchainKit, Smart Wallet, Mini Apps) are in progress. Use them for guidance; verify chain-specific instructions before running.
 
 | Trigger | Skill | When to use |
 |---------|-------|-------------|
@@ -55,7 +65,8 @@
 |---------|-------|-------------|
 | "deploy to mainnet", "go to production" | `deploy-to-mainnet` | Mainnet deployment checklist |
 | "pitch deck", "slides", "investor presentation" | `create-pitch-deck` | Pitch deck creation |
-| "hackathon submission", "submit", "demo video" | `submit-to-hackathon` | Hackathon submission prep |
+| "Base Batches submission", "submit to Base Batches", "500-word light paper" | `submit-to-base-batches` | **Base Batches submission prep — preferred wedge skill** |
+| "hackathon submission", "submit", "demo video" | `submit-to-hackathon` | (Solana / Colosseum) generic hackathon prep |
 | "marketing video", "deck review", "product video" | `marketing-video` | Video content creation |
 | "video looks generic", "video frame design", "device frame", "video CTA", "end card", "video composition", "video craft", "screenshot in video", "frame quality" | `video-craft` | Frame-level visual composition, product demo presentation, end-card design |
 | "apply for grant", "grant application", "200 USDG", "agentic engineering grant", "ST earn", "Superteam earn", "Superteam grant", "solana earn grant" | `apply-grant` | Prepare Agentic Engineering Grant application |
